@@ -12,19 +12,30 @@
 #ifndef DATA_UTILS_H
 #define DATA_UTILS_H
 
+/* Helper macro to define local-scope (private) variables/functions */
 #define PRIVATE static
 
-#define DEFAULT_TEMP 22.0
-#define ALPHA 0.07
+// --------------------------------------------------------------------------
+// CONSTANTS
+// --------------------------------------------------------------------------
 
 /**
- * @brief Performs Exponential Smoothing on raw sensor data.
- * * This function filters noise from raw measurements using a global 
- * static variable 'stabilizedValue' (which is private to DataUtils.cpp) 
- * and the smoothing constant ALPHA.
- * * @param rawValue The current raw measured value (e.g., temperature).
- * @return float The new, smoothed (stabilized) value.
+ * @brief Default initial temperature value used before first sensor reading.
  */
-float ExponentialSmooth(float rawValue);
+#define DEFAULT_TEMP 20.0
+
+/**
+ * @brief Smoothing factor (Alpha) for the Exponential Smoothing filter.
+ * * A lower value (closer to 0) results in stronger smoothing 
+ * (more historical data influence), while a higher value (closer to 1) 
+ * results in weaker smoothing (more current raw data influence).
+ */
+#define ALPHA 0.05
+
+// --------------------------------------------------------------------------
+// PUBLIC FUNCTION PROTOTYPE
+// --------------------------------------------------------------------------
+void Init_ExponentialSmooth(float t_init);
+float Run_ExponentialSmooth(float rawValue);
 
 #endif // DATA_UTILS_H

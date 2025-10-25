@@ -57,10 +57,10 @@ Display setup:
 #define SCREEN_HEIGHT 64 /* OLED height in pixels */
 #define OLED_RESET -1 /* Reset pin (set on '-1', as is not connected) */
 #define SCREEN_ADDRESS 0x3C /* display I2C address */
-#define INIT_SCREEN_TIME 2000 /* init info displayed in sec */
+#define INIT_SCREEN_TIME 3000 /* init info displayed in sec */
 
 /* Main loop CFG */
-#define LOOP_TIME 5000 /* loop time 1sec, measurement per 1sec */
+#define LOOP_TIME 6000 /* loop time 1sec, measurement per 1sec */
 #define BLINK_TIME 100 /* blink for time 0.1 sec */ 
 
 Adafruit_SHT31 sht30 = Adafruit_SHT31(); /* Instance for senzor */
@@ -78,11 +78,13 @@ void setup() {
   Serial.println("Serail comunication initialized.");
 
   /* Init sensor SHT30 check */
-  if (! sht30.begin(SHT30_ADDRESS)) {  
+  if (!sht30.begin(SHT30_ADDRESS)) {  
     Serial.println("ERROR: SHT30 senzor not found!");
     for(;;); // Hard program termination
   }
   Serial.println("OK: SHT30 sensor conected and initialized.");
+  float t_init = sht30.readTemperature();
+  Init_ExponentialSmooth(t_init);
 
   /* Display initialization */
   if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
@@ -103,7 +105,12 @@ void setup() {
   display.println("OLED: OK");
   display.println();
   display.println("I2C sensor: OK");
+  display.println();
+  display.setTextSize(2);
+  display.print("iT: ");
+  display.println(t_init);
   display.display(); /* Buffer on the display */ 
+  
   delay(INIT_SCREEN_TIME);
 }
 
@@ -124,7 +131,7 @@ void loop() {
     return; /* Skip other stuf of the current loop */
   }
 
-  t_filt = ExponentialSmooth(t);
+  t_filt = Run_ExponentialSmooth(t);
 
   /* Print measred signals */  
   PrintToSerial(t, t_filt, h);
