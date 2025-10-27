@@ -35,6 +35,10 @@ Display setup:
 - graph lib: Adafruit GFX Library
 - display driver: Adafruit SSD1306
 - addres 0x78 (7bit: 0x3C)
+
+MQTT:
+- Add lib: PubSubClient (Author: Nick O'Leary)
+- Add lib: ArduinoJson.h (Author: Benoit Blanchon)
 */
 
 // --------------------------------------------------------------------------
@@ -45,6 +49,9 @@ Display setup:
 #include "Adafruit_SHT31.h" /* SHT31 - Adafruit SHT31 Library */
 #include <Adafruit_GFX.h> /* Basic graphic lib */
 #include <Adafruit_SSD1306.h> /* SSD1306 Display driver */
+#include <ESP8266WiFi.h> /* WiFi lib for ESP8266 */
+#include <PubSubClient.h> /* MQTT client */
+#include <ArduinoJson.h> /* JSON lib */
 
 #include "Global.h"
 #include "DataUtils.h" /* Measured data processing */
@@ -71,6 +78,18 @@ Display setup:
 #define LOOP_TIME 6000 /* Loop time in milliseconds */
 #define BLINK_TIME 100 /* Blink duration for the on-board LED [ms] */ 
 
+/* MQTT broker (Mosquitto) on Raspberry Pi */
+#define MQTT_SERVER "192.168.241.111" /* IP address Raspberry Pi (Mosquitto Broker) */
+#define MQTT_PORT 1883
+#define MQTT_CLIENT_ID "LolinThermometer_01" /* Unique ID for this senzor */
+#define MQTT_TOPIC_TEMP "home/thermometer/temperature"
+#define MQTT_TOPIC_HUM "home/thermometer/humidity"
+#define MQTT_TOPIC_STATUS "home/thermometer/status"
+
+/* WiFi */
+#define WIFI_SSID "YOUR_WIFI_SSID" 
+#define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
+
 // --------------------------------------------------------------------------
 // MAIN DATA
 // --------------------------------------------------------------------------
@@ -78,12 +97,17 @@ Display setup:
 Adafruit_SHT31 sht30 = Adafruit_SHT31(); /* Instance for the SHT31 sensor */
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET); /* Instance for the SSD1306 display */
 
+WiFiClient espClient; /* WiFi Client */
+PubSubClient client(espClient); /* MQTT client is using WiFI client */
 // --------------------------------------------------------------------------
 // FUNCTION PROTOTYPES
 // --------------------------------------------------------------------------
 
 void PrintToDisplay(float t_filt, float t_raw, UB h);
 void PrintToSerial(float t, float t_filt, UB h);
+void WifiSetup();
+void ReconnectMqtt();
+void PublishData(float temp_filt, UB hum_round);
 
 // --------------------------------------------------------------------------
 // MAIN FUNCTIONS
@@ -120,8 +144,18 @@ void setup() {
 
   /* Display preparation (buffer clearing & init text)*/
   display.clearDisplay();
-  display.setTextSize(1);
+  display.setTextSize(2);
   display.setTextColor(SSD1306_WHITE);
+
+  display.setCursor(0, 0); /* Set cursor to the top-left corner */
+  display.println("Setup WIFI...");
+  WifiSetup();
+  display.println("Setup MQTT...");
+  client.setServer(MQTT_SERVER, MQTT_PORT);
+  display.println("Setup OK");
+  delay(500);
+  display.clearDisplay();
+  display.setTextSize(1);
   
   /* Init mesage */
   display.setCursor(0, 0); /* Set cursor to the top-left corner */
@@ -144,6 +178,14 @@ void loop() {
 
   float t_filt = 0; // Filtered temperature value
   UB h_round = 0; // Rounded humidity value (UB type)
+  
+  /* Check MQTT connection */
+  if (!client.connected()) {
+    /* Try to reconnect */
+    ReconnectMqtt();
+  }
+  /* MQTT client processing of incoming/outgoing packets */
+  client.loop();
   
   digitalWrite(LED_BUILTIN, LOW);
   delay(BLINK_TIME);
@@ -173,6 +215,12 @@ void loop() {
   /* Print measured signals */  
   PrintToSerial(t, t_filt, h_round);
   PrintToDisplay(t_filt, t, h_round);
+
+  /* Send MQTT data to MQTT broker */
+  if (client.connected()) {
+    /* Publish only in case of available client connection */
+    PublishData(t_filt, h_round);
+  }
   
   delay(LOOP_TIME - BLINK_TIME);
   /* Adjust main loop delay time for blink duration */
@@ -247,4 +295,91 @@ void PrintToSerial(float t, float t_filt, UB h){
     Serial.print(" ");
   }
   Serial.println();
+}
+
+/**
+ * @brief Handles connection to the local WiFi network.
+ */
+void WifiSetup() {
+  delay(10);
+  Serial.print("Connecting to ");
+  Serial.println(WIFI_SSID);
+
+  WiFi.mode(WIFI_STA); /* LOLIN ESP8266 as client */
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    // TODO add retries
+    delay(500);
+    Serial.print(".");
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(500);
+    digitalWrite(LED_BUILTIN, HIGH);
+  }
+
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.print("Connected to AP: ");
+	Serial.println(WIFI_SSID);
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
+  Serial.print("Signal: ");
+	Serial.print(WiFi.RSSI());
+  Serial.println(" dBm");
+  Serial.print("Mac: ");
+	Serial.println(WiFi.macAddress());
+	Serial.println("");
+}
+
+/**
+ * @brief Attempts to reconnect to the MQTT broker if the connection is lost.
+ */
+void ReconnectMqtt() {
+  /* Loop until we're reconnected */
+  while (!client.connected()) {
+    Serial.print("Attempting MQTT connection...");
+    
+    /* Attempt to connect */
+    if (client.connect(MQTT_CLIENT_ID, "username_optional", "password_optional")) {
+      Serial.println("connected");
+      /* Publish status on connection */
+      client.publish(MQTT_TOPIC_STATUS, "Device connected and operational.");
+    } else {
+      Serial.print("failed, rc=");
+      Serial.print(client.state());
+      Serial.println(" try again in 5 seconds");
+      // Wait 5 seconds before retrying
+      delay(5000);
+    }
+  }
+}
+
+/**
+ * @brief Publishes the measured data to the MQTT broker as JSON.
+ * @param temp_filt Filtered temperature value.
+ * @param hum_round Rounded humidity value.
+ */
+void PublishData(float temp_filt, UB hum_round) {
+  /* Create JSON doc with dynamic alocation (max. 100 Bytes) */
+  StaticJsonDocument<100> doc;
+  
+  doc["value"] = temp_filt;
+  doc["unit"] = "C";
+  
+  /* Serialize JSON na string */
+  char jsonBuffer[100];
+  serializeJson(doc, jsonBuffer);
+  
+  /* Send to MQTT */
+  client.publish(MQTT_TOPIC_TEMP, jsonBuffer);
+
+  doc.clear();
+
+  doc["value"] = hum_round;
+  doc["unit"] = "%";
+  serializeJson(doc, jsonBuffer);
+  client.publish(MQTT_TOPIC_HUM, jsonBuffer);
+  
+  Serial.print("MQTT published. T:"); Serial.print(temp_filt);
+  Serial.print(", H:"); Serial.println(hum_round);
 }
