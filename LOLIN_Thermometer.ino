@@ -87,8 +87,14 @@ MQTT:
 #define MQTT_TOPIC_STATUS "home/thermometer/status"
 
 /* WiFi */
+#define WIFI_ACTIVE 1 /* Enable/Disable WIFI conection */
+/* WiFi disabled (0) - For debug purpose over serial cable connection. 
+ * WiFi enabled  (1) - Establish WiFi connection and MQTT connection.
+ */
+#if (WIFI_ACTIVE == 1)
 #define WIFI_SSID "YOUR_WIFI_SSID" 
 #define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
+#endif
 
 // --------------------------------------------------------------------------
 // MAIN DATA
@@ -97,17 +103,21 @@ MQTT:
 Adafruit_SHT31 sht30 = Adafruit_SHT31(); /* Instance for the SHT31 sensor */
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET); /* Instance for the SSD1306 display */
 
+#if (WIFI_ACTIVE == 1)
 WiFiClient espClient; /* WiFi Client */
 PubSubClient client(espClient); /* MQTT client is using WiFI client */
+#endif
 // --------------------------------------------------------------------------
 // FUNCTION PROTOTYPES
 // --------------------------------------------------------------------------
 
 void PrintToDisplay(float t_filt, float t_raw, UB h);
 void PrintToSerial(float t, float t_filt, UB h);
+#if (WIFI_ACTIVE == 1)
 void WifiSetup();
 void ReconnectMqtt();
 void PublishData(float tmpr, UB hum);
+#endif
 
 // --------------------------------------------------------------------------
 // MAIN FUNCTIONS
@@ -162,11 +172,10 @@ void setup() {
   display.display(); /* Update the display buffer */ 
 
   delay(INIT_SCREEN_TIME);
-
   display.clearDisplay();
-  display.setTextSize(1);
-  display.setTextColor(SSD1306_WHITE);
 
+#if (WIFI_ACTIVE == 1)
+  display.setTextSize(1);
   display.setCursor(0, 0); /* Set cursor to the top-left corner */
   display.println("Setup WIFI...");
   display.display(); /* Update the display buffer */ 
@@ -182,16 +191,16 @@ void setup() {
   display.display(); /* Update the display buffer */ 
   
   delay(INIT_SCREEN_TIME);
-
   display.clearDisplay();
-  display.setTextSize(1);
+#endif /* WIFI_ACTIVE */
 }
 
 void loop() {
 
   float t_filt = 0; // Filtered temperature value
   UB h_round = 0; // Rounded humidity value (UB type)
-  
+
+#if (WIFI_ACTIV == 1)
   /* Check MQTT connection */
   if (!client.connected()) {
     /* Try to reconnect */
@@ -199,6 +208,7 @@ void loop() {
   }
   /* MQTT client processing of incoming/outgoing packets */
   client.loop();
+#endif /* WIFI_ACTIV */
   
   digitalWrite(LED_BUILTIN, LOW);
   delay(BLINK_TIME);
@@ -230,11 +240,13 @@ void loop() {
   PrintToSerial(t, t_filt, h_round);
   PrintToDisplay(t_filt, t, h_round);
 
+#if (WIFI_ACTIV == 1)
   /* Send MQTT data to MQTT broker */
   if (client.connected()) {
     /* Publish only in case of available client connection */
-    PublishData(t, h_round);
+    PublishData(t_filt, h_round);
   }
+#endif /* WIFI_ACTIV */
   
   delay(LOOP_TIME - BLINK_TIME);
   /* Adjust main loop delay time for blink duration */
@@ -310,6 +322,11 @@ void PrintToSerial(float t, float t_filt, UB h){
   }
   Serial.println();
 }
+
+#if (WIFI_ACTIVE == 1)
+// --------------------------------------------------------------------------
+// WIFI/MQTT FUNCTIONS
+// --------------------------------------------------------------------------
 
 /**
  * @brief Handles connection to the local WiFi network.
@@ -397,3 +414,4 @@ void PublishData(float tmpr, UB hum) {
   Serial.print("MQTT published. T:"); Serial.print(tmpr);
   Serial.print(", H:"); Serial.println(hum);
 }
+#endif /* WIFI_ACTIVE */
