@@ -14,6 +14,7 @@
 // --------------------------------------------------------------------------
 #include "Global.h"
 #include "DataUtils.h"
+#include <cmath>
 
 // --------------------------------------------------------------------------
 // PRIVATE DATA (Static Variables)
@@ -118,4 +119,19 @@ SB GetTemperatureTrend() {
  */
 const float* GetTmprTrendBuffer() {
   return DU_TmprTrendBuffer;
+}
+
+/**
+* @brief Rounds a float value to a specific number of decimal places.
+* This is used to limit the precision of raw sensor data early in the process.
+* @param value The float value to round.
+* @param places The number of decimal places (e.g., 2).
+* @return float The rounded value.
+*/
+float RoundToDecimals(float value, UB places) {
+  float multiplier = 1.0;
+  for (UB i = 0; i < places; i++) {
+    multiplier *= 10.0;
+  }
+  return round(value * multiplier) / multiplier;
 }

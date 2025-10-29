@@ -72,7 +72,7 @@ MQTT:
 #define SCREEN_HEIGHT 64 /* OLED height in pixels */
 #define OLED_RESET -1 /* Reset pin (set to '-1' as it is not connected) */
 #define SCREEN_ADDRESS 0x3C /* Display I2C address */
-#define INIT_SCREEN_TIME 3000 /* Initial info displayed duration [ms] */
+#define INIT_SCREEN_TIME 2000 /* Initial info displayed duration [ms] */
 
 /* Main loop configuration */
 #define LOOP_TIME 6000 /* Loop time in milliseconds */
@@ -107,7 +107,7 @@ void PrintToDisplay(float t_filt, float t_raw, UB h);
 void PrintToSerial(float t, float t_filt, UB h);
 void WifiSetup();
 void ReconnectMqtt();
-void PublishData(float temp_filt, UB hum_round);
+void PublishData(float tmpr, UB hum);
 
 // --------------------------------------------------------------------------
 // MAIN FUNCTIONS
@@ -132,6 +132,7 @@ void setup() {
   Serial.println("OK: SHT31 sensor connected and initialized.");
   
   float t_init = sht30.readTemperature();
+  t_init = RoundToDecimals(t_init, 2);
   Init_ExponentialSmooth(t_init);
   Init_TmprTrendBuffer(t_init);
   
@@ -141,21 +142,11 @@ void setup() {
     while (1) delay(1);
     /* TODO (Optionaly: program termination is not necessary, measurement can still runs) */
   }
-
+  
   /* Display preparation (buffer clearing & init text)*/
   display.clearDisplay();
-  display.setTextSize(2);
-  display.setTextColor(SSD1306_WHITE);
-
-  display.setCursor(0, 0); /* Set cursor to the top-left corner */
-  display.println("Setup WIFI...");
-  WifiSetup();
-  display.println("Setup MQTT...");
-  client.setServer(MQTT_SERVER, MQTT_PORT);
-  display.println("Setup OK");
-  delay(500);
-  display.clearDisplay();
   display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
   
   /* Init mesage */
   display.setCursor(0, 0); /* Set cursor to the top-left corner */
@@ -168,10 +159,32 @@ void setup() {
   display.setTextSize(2);
   display.print("iT: ");
   display.println(t_init);
-  display.display();
-  /* Update the display buffer */ 
+  display.display(); /* Update the display buffer */ 
+
+  delay(INIT_SCREEN_TIME);
+
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+
+  display.setCursor(0, 0); /* Set cursor to the top-left corner */
+  display.println("Setup WIFI...");
+  display.display(); /* Update the display buffer */ 
+
+  WifiSetup();
+  
+  display.println("Setup MQTT...");
+  display.display(); /* Update the display buffer */ 
+
+  client.setServer(MQTT_SERVER, MQTT_PORT);
+  
+  display.println("Setup OK");
+  display.display(); /* Update the display buffer */ 
   
   delay(INIT_SCREEN_TIME);
+
+  display.clearDisplay();
+  display.setTextSize(1);
 }
 
 void loop() {
@@ -200,9 +213,10 @@ void loop() {
     return; /* Skip the rest of the current loop iteration */
   }
 
+  t = RoundToDecimals(t, 2);
   AddTmprToTrendBuffer(t);
-  int trend = GetTemperatureTrend();
   t_filt = Run_ExponentialSmooth(t);
+  t_filt = RoundToDecimals(t_filt, 2);
   
   /* Cast humidity to integer (UB type) */
   h_round = (UB)round(h);
@@ -219,7 +233,7 @@ void loop() {
   /* Send MQTT data to MQTT broker */
   if (client.connected()) {
     /* Publish only in case of available client connection */
-    PublishData(t_filt, h_round);
+    PublishData(t, h_round);
   }
   
   delay(LOOP_TIME - BLINK_TIME);
@@ -278,9 +292,9 @@ void PrintToDisplay(float t_filt, float t_raw, UB h){
 void PrintToSerial(float t, float t_filt, UB h){
   /* Temperature info */
   Serial.print("T_raw: ");
-  Serial.print(t);
+  Serial.print(t,4);
   Serial.print(" C, T_filt: ");
-  Serial.print(t_filt);
+  Serial.print(t_filt,4);
   Serial.print(" C");
 
   /* Humidity info */
@@ -356,14 +370,14 @@ void ReconnectMqtt() {
 
 /**
  * @brief Publishes the measured data to the MQTT broker as JSON.
- * @param temp_filt Filtered temperature value.
- * @param hum_round Rounded humidity value.
+ * @param tmpr Temperature value.
+ * @param hum Humidity value.
  */
-void PublishData(float temp_filt, UB hum_round) {
+void PublishData(float tmpr, UB hum) {
   /* Create JSON doc with dynamic alocation (max. 100 Bytes) */
   StaticJsonDocument<100> doc;
   
-  doc["value"] = temp_filt;
+  doc["value"] = tmpr;
   doc["unit"] = "C";
   
   /* Serialize JSON na string */
@@ -375,11 +389,11 @@ void PublishData(float temp_filt, UB hum_round) {
 
   doc.clear();
 
-  doc["value"] = hum_round;
+  doc["value"] = hum;
   doc["unit"] = "%";
   serializeJson(doc, jsonBuffer);
   client.publish(MQTT_TOPIC_HUM, jsonBuffer);
   
-  Serial.print("MQTT published. T:"); Serial.print(temp_filt);
-  Serial.print(", H:"); Serial.println(hum_round);
+  Serial.print("MQTT published. T:"); Serial.print(tmpr);
+  Serial.print(", H:"); Serial.println(hum);
 }

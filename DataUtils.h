@@ -32,7 +32,7 @@
  * (more historical data influence), while a higher value (closer to 1) 
  * results in weaker smoothing (more current raw data influence).
  */
-#define ALPHA 0.03
+#define ALPHA 0.02
 
 /**
  * @brief Number of measurements stored in the circular trend buffer.
@@ -84,5 +84,13 @@ SB GetTemperatureTrend(void);
  * @return const float* A read-only pointer to the circular buffer array.
  */
 const float* GetTmprTrendBuffer(void);
+
+/**
+* @brief Rounds a float value to a specific number of decimal places.
+* @param value The float value to round.
+* @param places The number of decimal places (e.g., 2).
+* @return float The rounded value.
+*/
+float RoundToDecimals(float value, UB places);
 
 #endif // DATA_UTILS_H
