@@ -55,7 +55,8 @@
                 "fb820ddf08dc2cae",
                 "4fa6ad5dbe65ef9f",
                 "8170ac4f122f046e",
-                "feb63c859cdf16e8"
+                "c2c4ce9e2793123e",
+                "428819455eab24e8"
             ]
         ]
     },
@@ -85,7 +86,7 @@
         "name": "10 to 1",
         "property": "payload",
         "action": "mean",
-        "count": "3",
+        "count": "10",
         "round": "",
         "mult": "single",
         "reduce": true,
@@ -219,7 +220,7 @@
             "#e5e5e5"
         ],
         "gridColorDefault": true,
-        "width": "5",
+        "width": "6",
         "height": "5",
         "className": "",
         "interpolation": "linear",
@@ -281,7 +282,7 @@
             "#e5e5e5"
         ],
         "gridColorDefault": true,
-        "width": "5",
+        "width": "6",
         "height": "5",
         "className": "",
         "interpolation": "linear",
@@ -343,7 +344,7 @@
             "#e5e5e5"
         ],
         "gridColorDefault": true,
-        "width": "5",
+        "width": "6",
         "height": "5",
         "className": "",
         "interpolation": "linear",
@@ -459,7 +460,7 @@
             "#e5e5e5"
         ],
         "gridColorDefault": true,
-        "width": "5",
+        "width": "6",
         "height": "5",
         "className": "",
         "interpolation": "linear",
@@ -483,7 +484,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 100,
-        "y": 620,
+        "y": 640,
         "wires": [
             [
                 "98afe43557ae7cc1"
@@ -510,7 +511,7 @@
         "to": "",
         "reg": false,
         "x": 330,
-        "y": 620,
+        "y": 640,
         "wires": [
             [
                 "49b889d688c93d53",
@@ -539,7 +540,7 @@
         "value": "payload",
         "valueType": "msg",
         "x": 1020,
-        "y": 620,
+        "y": 640,
         "wires": []
     },
     {
@@ -554,7 +555,7 @@
         "mult": "single",
         "reduce": true,
         "x": 570,
-        "y": 700,
+        "y": 720,
         "wires": [
             [
                 "2117bf5fbf678b14"
@@ -595,8 +596,8 @@
         "removeOlderUnit": "3600",
         "removeOlderPoints": "",
         "colors": [
-            "#0095ff",
             "#ff0000",
+            "#0080ff",
             "#ff7f0e",
             "#2ca02c",
             "#a347e1",
@@ -613,12 +614,12 @@
             "#e5e5e5"
         ],
         "gridColorDefault": true,
-        "width": "5",
+        "width": "6",
         "height": "5",
         "className": "",
         "interpolation": "linear",
         "x": 1030,
-        "y": 700,
+        "y": 720,
         "wires": [
             []
         ]
@@ -643,10 +644,164 @@
         "to": "",
         "reg": false,
         "x": 790,
-        "y": 700,
+        "y": 720,
         "wires": [
             [
                 "487b2b9faa3e4410"
+            ]
+        ]
+    },
+    {
+        "id": "c2c4ce9e2793123e",
+        "type": "smooth",
+        "z": "1e59d6a3e5a88154",
+        "name": "200 to 1",
+        "property": "payload",
+        "action": "mean",
+        "count": "200",
+        "round": "",
+        "mult": "single",
+        "reduce": true,
+        "x": 580,
+        "y": 560,
+        "wires": [
+            [
+                "9a8e6b08924071e6"
+            ]
+        ]
+    },
+    {
+        "id": "9a8e6b08924071e6",
+        "type": "change",
+        "z": "1e59d6a3e5a88154",
+        "name": "RoundTo2Decimal",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$round(payload, 2)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 790,
+        "y": 560,
+        "wires": [
+            [
+                "f1f594a990aaf0f7"
+            ]
+        ]
+    },
+    {
+        "id": "f1f594a990aaf0f7",
+        "type": "ui-chart",
+        "z": "1e59d6a3e5a88154",
+        "group": "9a3a1f181c9b4cfe",
+        "name": "Tmpr 7 dni",
+        "label": "Teplota [C] za 7dni",
+        "order": 8,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
+        "ymin": "",
+        "ymax": "",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": false,
+        "removeOlder": "168",
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": "6",
+        "height": "5",
+        "className": "",
+        "interpolation": "linear",
+        "x": 1030,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "428819455eab24e8",
+        "type": "smooth",
+        "z": "1e59d6a3e5a88154",
+        "name": "2 to 1",
+        "property": "payload",
+        "action": "mean",
+        "count": "2",
+        "round": "",
+        "mult": "single",
+        "reduce": true,
+        "x": 570,
+        "y": 240,
+        "wires": [
+            [
+                "0f9ad7090faee462"
+            ]
+        ]
+    },
+    {
+        "id": "0f9ad7090faee462",
+        "type": "change",
+        "z": "1e59d6a3e5a88154",
+        "name": "RoundTo2Decimal",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$round(payload, 2)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 790,
+        "y": 240,
+        "wires": [
+            [
+                "feb63c859cdf16e8"
             ]
         ]
     },
@@ -728,8 +883,8 @@
         ],
         "order": 1,
         "className": "",
-        "visible": "true",
-        "disabled": "false"
+        "visible": true,
+        "disabled": false
     },
     {
         "id": "b9eab409d5cf2da1",
@@ -771,7 +926,7 @@
         }
     },
     {
-        "id": "5e6911043a0e7721",
+        "id": "816ecf478897f9ad",
         "type": "global-config",
         "env": [],
         "modules": {
