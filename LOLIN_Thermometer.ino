@@ -142,10 +142,22 @@ void setup() {
   Serial.println("OK: SHT31 sensor connected and initialized.");
   
   float t_init = sht30.readTemperature();
+  float h_init = sht30.readHumidity();
+
+  /* Check for data validity (e.g., is not NaN) */
+  if (isnan(t_init) || isnan(h_init)) {
+    Serial.println("ERROR: Error reading from sensor SHT31!");
+    for(;;); // Hard program termination
+  }
+  Serial.println("OK: SHT31 sensor data OK.");
+
   t_init = RoundToDecimals(t_init, 2);
-  Init_ExponentialSmooth(t_init);
+  Init_TmprSmooth(t_init);
   Init_TmprTrendBuffer(t_init);
-  
+    
+  h_init = RoundToDecimals(h_init, 2);
+  Init_HumiSmooth(h_init);
+
   /* Initialize the OLED display */
   if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
     Serial.println("ERROR: OLED display not found!");
@@ -198,9 +210,10 @@ void setup() {
 void loop() {
 
   float t_filt = 0; // Filtered temperature value
+  float h_filt = 0;
   UB h_round = 0; // Rounded humidity value (UB type)
 
-#if (WIFI_ACTIV == 1)
+#if (WIFI_ACTIVE == 1)
   /* Check MQTT connection */
   if (!client.connected()) {
     /* Try to reconnect */
@@ -208,7 +221,7 @@ void loop() {
   }
   /* MQTT client processing of incoming/outgoing packets */
   client.loop();
-#endif /* WIFI_ACTIV */
+#endif /* WIFI_ACTIVE */
   
   digitalWrite(LED_BUILTIN, LOW);
   delay(BLINK_TIME);
@@ -225,9 +238,13 @@ void loop() {
 
   t = RoundToDecimals(t, 2);
   AddTmprToTrendBuffer(t);
-  t_filt = Run_ExponentialSmooth(t);
+  t_filt = Run_TmprSmooth(t);
   t_filt = RoundToDecimals(t_filt, 2);
   
+  h = RoundToDecimals(h, 2);
+  h_filt = Run_HumiSmooth(h);
+  h_filt = RoundToDecimals(h_filt, 2);
+
   /* Cast humidity to integer (UB type) */
   h_round = (UB)round(h);
   
@@ -237,16 +254,16 @@ void loop() {
   }
 
   /* Print measured signals */  
-  PrintToSerial(t, t_filt, h_round);
+  PrintToSerial(t, t_filt, h_filt);
   PrintToDisplay(t_filt, t, h_round);
 
-#if (WIFI_ACTIV == 1)
+#if (WIFI_ACTIVE == 1)
   /* Send MQTT data to MQTT broker */
   if (client.connected()) {
     /* Publish only in case of available client connection */
-    PublishData(t_filt, h_round);
+    PublishData(t_filt, h_filt);
   }
-#endif /* WIFI_ACTIV */
+#endif /* WIFI_ACTIVE */
   
   delay(LOOP_TIME - BLINK_TIME);
   /* Adjust main loop delay time for blink duration */
@@ -301,25 +318,27 @@ void PrintToDisplay(float t_filt, float t_raw, UB h){
  * @param t_filt The filtered temperature value.
  * @param h The rounded humidity value (0-100%).
  */
-void PrintToSerial(float t, float t_filt, UB h){
+void PrintToSerial(float t, float t_filt, float h){
   /* Temperature info */
   Serial.print("T_raw: ");
-  Serial.print(t,4);
+  Serial.print(t, 2); /* number of decimal places */
   Serial.print(" C, T_filt: ");
-  Serial.print(t_filt,4);
+  Serial.print(t_filt, 2);
   Serial.print(" C");
 
   /* Humidity info */
-  Serial.print(" | H: ");
-  Serial.print(h);
-  Serial.print(" % | Buffer: ");
+  Serial.print(" | H_filt: ");
+  Serial.print(h, 2);
+  Serial.print(" %");
 
-  const float* buffer = GetTmprTrendBuffer();
+  /* DEBUG: Checking Trend-buffer values */
+  // Serial.print(" Buffer: ");
+  // const float* buffer = GetTmprTrendBuffer();
+  // for (UB i = 0; i < TREND_COUNT; i++) {
+  //   Serial.print(buffer[i]);
+  //   Serial.print(" ");
+  // }
 
-  for (UB i = 0; i < TREND_COUNT; i++) {
-    Serial.print(buffer[i]);
-    Serial.print(" ");
-  }
   Serial.println();
 }
 
@@ -336,6 +355,16 @@ void WifiSetup() {
   Serial.print("Connecting to ");
   Serial.println(WIFI_SSID);
 
+  IPAddress local_IP(192, 168, 241, 120);
+  IPAddress gateway(192, 168, 241, 1);
+  IPAddress subnet(255, 255, 255, 0);
+  IPAddress primaryDNS(192, 168, 241, 1);
+
+  // Static IP address
+  if (!WiFi.config(local_IP, gateway, subnet, primaryDNS)) {
+    Serial.println("Static IP configuration failed!");
+  }
+
   WiFi.mode(WIFI_STA); /* LOLIN ESP8266 as client */
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
@@ -351,15 +380,15 @@ void WifiSetup() {
   Serial.println("");
   Serial.println("WiFi connected");
   Serial.print("Connected to AP: ");
-	Serial.println(WIFI_SSID);
+  Serial.println(WIFI_SSID);
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
   Serial.print("Signal: ");
-	Serial.print(WiFi.RSSI());
+  Serial.print(WiFi.RSSI());
   Serial.println(" dBm");
   Serial.print("Mac: ");
-	Serial.println(WiFi.macAddress());
-	Serial.println("");
+  Serial.println(WiFi.macAddress());
+  Serial.println("");
 }
 
 /**
@@ -390,7 +419,7 @@ void ReconnectMqtt() {
  * @param tmpr Temperature value.
  * @param hum Humidity value.
  */
-void PublishData(float tmpr, UB hum) {
+void PublishData(float tmpr, float hum) {
   /* Create JSON doc with dynamic alocation (max. 100 Bytes) */
   StaticJsonDocument<100> doc;
   
@@ -411,7 +440,9 @@ void PublishData(float tmpr, UB hum) {
   serializeJson(doc, jsonBuffer);
   client.publish(MQTT_TOPIC_HUM, jsonBuffer);
   
-  Serial.print("MQTT published. T:"); Serial.print(tmpr);
-  Serial.print(", H:"); Serial.println(hum);
+  Serial.print("MQTT published. T:"); 
+  Serial.print(tmpr);
+  Serial.print(", H:"); 
+  Serial.println(hum);
 }
 #endif /* WIFI_ACTIVE */

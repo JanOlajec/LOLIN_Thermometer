@@ -1,16 +1,16 @@
 [
     {
-        "id": "564be7a94a8adf10",
+        "id": "1e59d6a3e5a88154",
         "type": "tab",
-        "label": "LOLIN_Tmpr",
+        "label": "LOLIN_Thermo",
         "disabled": false,
         "info": "",
         "env": []
     },
     {
-        "id": "8dcea9d374fcaa06",
+        "id": "ca376d73ba541abe",
         "type": "mqtt in",
-        "z": "564be7a94a8adf10",
+        "z": "1e59d6a3e5a88154",
         "name": "Temperature",
         "topic": "home/thermometer/temperature",
         "qos": "2",
@@ -20,36 +20,19 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 130,
-        "y": 380,
+        "x": 90,
+        "y": 160,
         "wires": [
             [
-                "9b0a5dab39325c54"
+                "3f4cb1d22bd0dfe4"
             ]
         ]
     },
     {
-        "id": "b9b36e0a6d01ccc7",
-        "type": "debug",
-        "z": "564be7a94a8adf10",
-        "name": "debug 1",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 400,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "9b0a5dab39325c54",
+        "id": "3f4cb1d22bd0dfe4",
         "type": "change",
-        "z": "564be7a94a8adf10",
-        "name": "",
+        "z": "1e59d6a3e5a88154",
+        "name": "TmprValue",
         "rules": [
             {
                 "t": "move",
@@ -64,245 +47,22 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 470,
-        "y": 380,
+        "x": 330,
+        "y": 160,
         "wires": [
             [
-                "be812b035602ae1e",
-                "b4421b5ee27d6fbe",
-                "804a9fdc2dafa860",
-                "609c0f4e781f45c1",
-                "c383d15d16b0a41e",
-                "6964b18d28501ad6"
+                "d336e0ce41a7fbcc",
+                "fb820ddf08dc2cae",
+                "4fa6ad5dbe65ef9f",
+                "8170ac4f122f046e",
+                "feb63c859cdf16e8"
             ]
         ]
     },
     {
-        "id": "be812b035602ae1e",
-        "type": "ui_chart",
-        "z": "564be7a94a8adf10",
-        "name": "",
-        "group": "7ec6b450c7165e5a",
-        "order": 2,
-        "width": "0",
-        "height": "0",
-        "label": "Teplota [C] 1hod",
-        "chartType": "line",
-        "legend": "false",
-        "xformat": "HH:mm",
-        "interpolate": "linear",
-        "nodata": "",
-        "dot": false,
-        "ymin": "",
-        "ymax": "",
-        "removeOlder": "1",
-        "removeOlderPoints": "",
-        "removeOlderUnit": "3600",
-        "cutout": 0,
-        "useOneColor": false,
-        "useUTC": true,
-        "colors": [
-            "#1f77b4",
-            "#aec7e8",
-            "#ff7f0e",
-            "#2ca02c",
-            "#98df8a",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "outputs": 1,
-        "useDifferentColor": false,
-        "className": "",
-        "x": 1200,
-        "y": 440,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "b042704d7101aa97",
-        "type": "ui_chart",
-        "z": "564be7a94a8adf10",
-        "name": "",
-        "group": "7ec6b450c7165e5a",
-        "order": 3,
-        "width": "0",
-        "height": "0",
-        "label": "Teplota [C] 6hod",
-        "chartType": "line",
-        "legend": "false",
-        "xformat": "HH:mm",
-        "interpolate": "linear",
-        "nodata": "",
-        "dot": false,
-        "ymin": "",
-        "ymax": "",
-        "removeOlder": "6",
-        "removeOlderPoints": "",
-        "removeOlderUnit": "3600",
-        "cutout": 0,
-        "useOneColor": false,
-        "useUTC": true,
-        "colors": [
-            "#1f77b4",
-            "#aec7e8",
-            "#ff7f0e",
-            "#2ca02c",
-            "#98df8a",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "outputs": 1,
-        "useDifferentColor": false,
-        "className": "",
-        "x": 1200,
-        "y": 540,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "1a46dcef5a75da4d",
-        "type": "ui_chart",
-        "z": "564be7a94a8adf10",
-        "name": "",
-        "group": "7ec6b450c7165e5a",
-        "order": 5,
-        "width": "0",
-        "height": "0",
-        "label": "Teplota [C] 24hod",
-        "chartType": "line",
-        "legend": "false",
-        "xformat": "HH:mm",
-        "interpolate": "linear",
-        "nodata": "",
-        "dot": false,
-        "ymin": "",
-        "ymax": "",
-        "removeOlder": "24",
-        "removeOlderPoints": "",
-        "removeOlderUnit": "3600",
-        "cutout": 0,
-        "useOneColor": false,
-        "useUTC": true,
-        "colors": [
-            "#1f77b4",
-            "#aec7e8",
-            "#ff7f0e",
-            "#2ca02c",
-            "#98df8a",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "outputs": 1,
-        "useDifferentColor": false,
-        "className": "",
-        "x": 1210,
-        "y": 700,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "6ddd28ddf42897a1",
-        "type": "ui_chart",
-        "z": "564be7a94a8adf10",
-        "name": "",
-        "group": "7ec6b450c7165e5a",
-        "order": 4,
-        "width": "0",
-        "height": "0",
-        "label": "Teplota [C] 12hod",
-        "chartType": "line",
-        "legend": "false",
-        "xformat": "HH:mm",
-        "interpolate": "linear",
-        "nodata": "",
-        "dot": false,
-        "ymin": "",
-        "ymax": "",
-        "removeOlder": "12",
-        "removeOlderPoints": "",
-        "removeOlderUnit": "3600",
-        "cutout": 0,
-        "useOneColor": false,
-        "useUTC": true,
-        "colors": [
-            "#1f77b4",
-            "#aec7e8",
-            "#ff7f0e",
-            "#2ca02c",
-            "#98df8a",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "outputs": 1,
-        "useDifferentColor": false,
-        "className": "",
-        "x": 1210,
-        "y": 620,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "b4421b5ee27d6fbe",
+        "id": "d336e0ce41a7fbcc",
         "type": "smooth",
-        "z": "564be7a94a8adf10",
-        "name": "10 to 1",
-        "property": "payload",
-        "action": "mean",
-        "count": "10",
-        "round": "",
-        "mult": "single",
-        "reduce": true,
-        "x": 730,
-        "y": 540,
-        "wires": [
-            [
-                "fcd20190a27e4cc9"
-            ]
-        ]
-    },
-    {
-        "id": "fcd20190a27e4cc9",
-        "type": "change",
-        "z": "564be7a94a8adf10",
-        "name": "RoundTo2Tenths",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "$round(payload, 2)",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 910,
-        "y": 540,
-        "wires": [
-            [
-                "b042704d7101aa97"
-            ]
-        ]
-    },
-    {
-        "id": "804a9fdc2dafa860",
-        "type": "smooth",
-        "z": "564be7a94a8adf10",
+        "z": "1e59d6a3e5a88154",
         "name": "20 to 1",
         "property": "payload",
         "action": "mean",
@@ -310,45 +70,37 @@
         "round": "",
         "mult": "single",
         "reduce": true,
-        "x": 730,
-        "y": 620,
+        "x": 570,
+        "y": 400,
         "wires": [
             [
-                "9b4f50410b4dfa04"
+                "731368982ecf7dfe"
             ]
         ]
     },
     {
-        "id": "9b4f50410b4dfa04",
-        "type": "change",
-        "z": "564be7a94a8adf10",
-        "name": "RoundTo2Tenths",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "$round(payload, 2)",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 910,
-        "y": 620,
-        "wires": [
-            [
-                "6ddd28ddf42897a1"
-            ]
-        ]
-    },
-    {
-        "id": "609c0f4e781f45c1",
+        "id": "fb820ddf08dc2cae",
         "type": "smooth",
-        "z": "564be7a94a8adf10",
+        "z": "1e59d6a3e5a88154",
+        "name": "10 to 1",
+        "property": "payload",
+        "action": "mean",
+        "count": "3",
+        "round": "",
+        "mult": "single",
+        "reduce": true,
+        "x": 570,
+        "y": 320,
+        "wires": [
+            [
+                "2255909e335cb6f2"
+            ]
+        ]
+    },
+    {
+        "id": "4fa6ad5dbe65ef9f",
+        "type": "smooth",
+        "z": "1e59d6a3e5a88154",
         "name": "30 to 1",
         "property": "payload",
         "action": "mean",
@@ -356,19 +108,43 @@
         "round": "",
         "mult": "single",
         "reduce": true,
-        "x": 730,
-        "y": 700,
+        "x": 570,
+        "y": 480,
         "wires": [
             [
-                "e8819a230b5c2144"
+                "bedc96ec3733c676"
             ]
         ]
     },
     {
-        "id": "e8819a230b5c2144",
+        "id": "8170ac4f122f046e",
+        "type": "ui-text",
+        "z": "1e59d6a3e5a88154",
+        "group": "9a3a1f181c9b4cfe",
+        "order": 1,
+        "width": "1",
+        "height": "1",
+        "name": "Temperature",
+        "label": "Teplota [C]:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": false,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 1030,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "2255909e335cb6f2",
         "type": "change",
-        "z": "564be7a94a8adf10",
-        "name": "RoundTo2Tenths",
+        "z": "1e59d6a3e5a88154",
+        "name": "RoundTo2Decimal",
         "rules": [
             {
                 "t": "set",
@@ -383,212 +159,22 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 910,
-        "y": 700,
+        "x": 790,
+        "y": 320,
         "wires": [
             [
-                "1a46dcef5a75da4d",
-                "440130894734c6ab"
+                "cb33d2ad43452282"
             ]
         ]
     },
     {
-        "id": "93b14be0ef1b2858",
-        "type": "comment",
-        "z": "564be7a94a8adf10",
-        "name": "Vybere iba hodnotu (value)",
-        "info": "",
-        "x": 470,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "6a15e7dc843c39c4",
-        "type": "comment",
-        "z": "564be7a94a8adf10",
-        "name": "Agregacia (avg)",
-        "info": "",
-        "x": 700,
-        "y": 760,
-        "wires": []
-    },
-    {
-        "id": "d5939c5f9adf441f",
-        "type": "comment",
-        "z": "564be7a94a8adf10",
-        "name": "Iba 2 desatine miesta",
-        "info": "",
-        "x": 920,
-        "y": 760,
-        "wires": []
-    },
-    {
-        "id": "5a8194aa0d84768e",
-        "type": "mqtt in",
-        "z": "564be7a94a8adf10",
-        "name": "Humidity",
-        "topic": "home/thermometer/humidity",
-        "qos": "2",
-        "datatype": "json",
-        "broker": "0e745f397e5b7cec",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 120,
-        "y": 200,
-        "wires": [
-            [
-                "b9b36e0a6d01ccc7",
-                "61eb740307ed4596"
-            ]
-        ]
-    },
-    {
-        "id": "61eb740307ed4596",
-        "type": "change",
-        "z": "564be7a94a8adf10",
-        "name": "",
-        "rules": [
-            {
-                "t": "move",
-                "p": "payload.value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 450,
-        "y": 200,
-        "wires": [
-            [
-                "316863c88ed5d557",
-                "5b206c9b07f2c080"
-            ]
-        ]
-    },
-    {
-        "id": "316863c88ed5d557",
-        "type": "smooth",
-        "z": "564be7a94a8adf10",
-        "name": "20 to 1",
-        "property": "payload",
-        "action": "mean",
-        "count": "20",
-        "round": "",
-        "mult": "single",
-        "reduce": true,
-        "x": 730,
-        "y": 260,
-        "wires": [
-            [
-                "7940fcf13825a3d8"
-            ]
-        ]
-    },
-    {
-        "id": "7940fcf13825a3d8",
-        "type": "change",
-        "z": "564be7a94a8adf10",
-        "name": "RoundTo1Tenths",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "$round(payload, 1)",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 910,
-        "y": 260,
-        "wires": [
-            [
-                "1a8c3501f505e59c",
-                "a710bebebf62afe2"
-            ]
-        ]
-    },
-    {
-        "id": "440130894734c6ab",
+        "id": "feb63c859cdf16e8",
         "type": "ui-chart",
-        "z": "564be7a94a8adf10",
-        "group": "e8cf2d0535eacbb2",
-        "name": "Teplota [C] za 24 hod",
-        "label": "chart",
-        "order": 2,
-        "chartType": "line",
-        "category": "topic",
-        "categoryType": "msg",
-        "xAxisLabel": "",
-        "xAxisProperty": "",
-        "xAxisPropertyType": "timestamp",
-        "xAxisType": "time",
-        "xAxisFormat": "",
-        "xAxisFormatType": "auto",
-        "xmin": "",
-        "xmax": "",
-        "yAxisLabel": "",
-        "yAxisProperty": "payload",
-        "yAxisPropertyType": "msg",
-        "ymin": "",
-        "ymax": "",
-        "bins": 10,
-        "action": "append",
-        "stackSeries": false,
-        "pointShape": "circle",
-        "pointRadius": 4,
-        "showLegend": true,
-        "removeOlder": "24",
-        "removeOlderUnit": "3600",
-        "removeOlderPoints": "",
-        "colors": [
-            "#0095ff",
-            "#ff0000",
-            "#ff7f0e",
-            "#2ca02c",
-            "#a347e1",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "textColor": [
-            "#666666"
-        ],
-        "textColorDefault": true,
-        "gridColor": [
-            "#e5e5e5"
-        ],
-        "gridColorDefault": true,
-        "width": "6",
-        "height": "4",
-        "className": "",
-        "interpolation": "linear",
-        "x": 1440,
-        "y": 780,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "c383d15d16b0a41e",
-        "type": "ui-chart",
-        "z": "564be7a94a8adf10",
-        "group": "e8cf2d0535eacbb2",
-        "name": "Teplota [C] za 1hod ",
-        "label": "Teplota [C] za 1hod ",
-        "order": 1,
+        "z": "1e59d6a3e5a88154",
+        "group": "9a3a1f181c9b4cfe",
+        "name": "Tmpr 1hod",
+        "label": "Teplota [C] za 1hod",
+        "order": 3,
         "chartType": "line",
         "category": "topic",
         "categoryType": "msg",
@@ -633,116 +219,435 @@
             "#e5e5e5"
         ],
         "gridColorDefault": true,
-        "width": "6",
-        "height": "4",
+        "width": "5",
+        "height": "5",
         "className": "",
         "interpolation": "linear",
-        "x": 1470,
-        "y": 500,
+        "x": 1030,
+        "y": 240,
         "wires": [
             []
         ]
     },
     {
-        "id": "1a8c3501f505e59c",
-        "type": "debug",
-        "z": "564be7a94a8adf10",
-        "name": "debug 2",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1180,
-        "y": 320,
-        "wires": []
-    },
-    {
-        "id": "6964b18d28501ad6",
-        "type": "ui_text",
-        "z": "564be7a94a8adf10",
-        "group": "7ec6b450c7165e5a",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "name": "",
-        "label": "Teplota: ",
-        "format": "{{msg.payload}}",
-        "layout": "row-left",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": 16,
-        "color": "#000000",
-        "x": 1180,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "5b206c9b07f2c080",
-        "type": "ui_text",
-        "z": "564be7a94a8adf10",
-        "group": "a5aa17e2b00616a3",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "name": "",
-        "label": "Vlhkost: ",
-        "format": "{{msg.payload}}",
-        "layout": "row-left",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": 16,
-        "color": "#000000",
-        "x": 1180,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "a710bebebf62afe2",
-        "type": "ui_chart",
-        "z": "564be7a94a8adf10",
-        "name": "",
-        "group": "a5aa17e2b00616a3",
-        "order": 2,
-        "width": "0",
-        "height": "0",
-        "label": "Vlhkost [%] 12hod",
+        "id": "cb33d2ad43452282",
+        "type": "ui-chart",
+        "z": "1e59d6a3e5a88154",
+        "group": "9a3a1f181c9b4cfe",
+        "name": "Tmpr 6hod",
+        "label": "Teplota [C] za 6hod",
+        "order": 4,
         "chartType": "line",
-        "legend": "false",
-        "xformat": "HH:mm",
-        "interpolate": "linear",
-        "nodata": "",
-        "dot": false,
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
         "ymin": "",
         "ymax": "",
-        "removeOlder": "12",
-        "removeOlderPoints": "",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": false,
+        "removeOlder": "6",
         "removeOlderUnit": "3600",
-        "cutout": 0,
-        "useOneColor": false,
-        "useUTC": true,
+        "removeOlderPoints": "",
         "colors": [
-            "#1f77b4",
-            "#aec7e8",
+            "#0095ff",
+            "#ff0000",
             "#ff7f0e",
             "#2ca02c",
-            "#98df8a",
+            "#a347e1",
             "#d62728",
             "#ff9896",
             "#9467bd",
             "#c5b0d5"
         ],
-        "outputs": 1,
-        "useDifferentColor": false,
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": "5",
+        "height": "5",
         "className": "",
-        "x": 1210,
-        "y": 260,
+        "interpolation": "linear",
+        "x": 1030,
+        "y": 320,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "7e1a5cf5a191e007",
+        "type": "ui-chart",
+        "z": "1e59d6a3e5a88154",
+        "group": "9a3a1f181c9b4cfe",
+        "name": "Tmpr 12hod",
+        "label": "Teplota [C] za 12hod",
+        "order": 5,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
+        "ymin": "",
+        "ymax": "",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": false,
+        "removeOlder": "12",
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": "5",
+        "height": "5",
+        "className": "",
+        "interpolation": "linear",
+        "x": 1030,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "731368982ecf7dfe",
+        "type": "change",
+        "z": "1e59d6a3e5a88154",
+        "name": "RoundTo2Decimal",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$round(payload, 2)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 790,
+        "y": 400,
+        "wires": [
+            [
+                "7e1a5cf5a191e007"
+            ]
+        ]
+    },
+    {
+        "id": "bedc96ec3733c676",
+        "type": "change",
+        "z": "1e59d6a3e5a88154",
+        "name": "RoundTo2Decimal",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$round(payload, 2)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 790,
+        "y": 480,
+        "wires": [
+            [
+                "3fd336a0bb5520a0"
+            ]
+        ]
+    },
+    {
+        "id": "3fd336a0bb5520a0",
+        "type": "ui-chart",
+        "z": "1e59d6a3e5a88154",
+        "group": "9a3a1f181c9b4cfe",
+        "name": "Tmpr 24hod",
+        "label": "Teplota [C] za 24hod",
+        "order": 7,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
+        "ymin": "",
+        "ymax": "",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": false,
+        "removeOlder": "24",
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": "5",
+        "height": "5",
+        "className": "",
+        "interpolation": "linear",
+        "x": 1030,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4bb2c5943184f3be",
+        "type": "mqtt in",
+        "z": "1e59d6a3e5a88154",
+        "name": "Humidity",
+        "topic": "home/thermometer/humidity",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "0e745f397e5b7cec",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 620,
+        "wires": [
+            [
+                "98afe43557ae7cc1"
+            ]
+        ]
+    },
+    {
+        "id": "98afe43557ae7cc1",
+        "type": "change",
+        "z": "1e59d6a3e5a88154",
+        "name": "TmprValue",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.value",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 620,
+        "wires": [
+            [
+                "49b889d688c93d53",
+                "3fe8d3f388db0bf8"
+            ]
+        ]
+    },
+    {
+        "id": "49b889d688c93d53",
+        "type": "ui-text",
+        "z": "1e59d6a3e5a88154",
+        "group": "9a3a1f181c9b4cfe",
+        "order": 2,
+        "width": "1",
+        "height": "1",
+        "name": "Humidity",
+        "label": "Vlhkost [%]:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": false,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 1020,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "3fe8d3f388db0bf8",
+        "type": "smooth",
+        "z": "1e59d6a3e5a88154",
+        "name": "20 to 1",
+        "property": "payload",
+        "action": "mean",
+        "count": "20",
+        "round": "",
+        "mult": "single",
+        "reduce": true,
+        "x": 570,
+        "y": 700,
+        "wires": [
+            [
+                "2117bf5fbf678b14"
+            ]
+        ]
+    },
+    {
+        "id": "487b2b9faa3e4410",
+        "type": "ui-chart",
+        "z": "1e59d6a3e5a88154",
+        "group": "9a3a1f181c9b4cfe",
+        "name": "Humi 12hod",
+        "label": "Vlhkost [%] za 12hod",
+        "order": 6,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
+        "ymin": "",
+        "ymax": "",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": false,
+        "removeOlder": "12",
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": "5",
+        "height": "5",
+        "className": "",
+        "interpolation": "linear",
+        "x": 1030,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2117bf5fbf678b14",
+        "type": "change",
+        "z": "1e59d6a3e5a88154",
+        "name": "RoundTo2Decimal",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$round(payload, 2)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 790,
+        "y": 700,
+        "wires": [
+            [
+                "487b2b9faa3e4410"
+            ]
         ]
     },
     {
@@ -777,58 +682,28 @@
         "sessionExpiry": ""
     },
     {
-        "id": "7ec6b450c7165e5a",
-        "type": "ui_group",
-        "name": "TestGroup",
-        "tab": "70ac56d5aa5c3389",
-        "order": 1,
-        "disp": true,
-        "width": "7",
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "e8cf2d0535eacbb2",
+        "id": "9a3a1f181c9b4cfe",
         "type": "ui-group",
-        "name": "Group 1",
-        "page": "1f575f8454071d2e",
+        "name": "Teplota",
+        "page": "148a611776ecc792",
         "width": 6,
         "height": 1,
         "order": 1,
         "showTitle": true,
         "className": "",
-        "visible": true,
-        "disabled": false,
+        "visible": "true",
+        "disabled": "false",
         "groupType": "default"
     },
     {
-        "id": "a5aa17e2b00616a3",
-        "type": "ui_group",
-        "name": "TestGroup2",
-        "tab": "70ac56d5aa5c3389",
-        "order": 2,
-        "disp": true,
-        "width": "7",
-        "collapse": true,
-        "className": ""
-    },
-    {
-        "id": "70ac56d5aa5c3389",
-        "type": "ui_tab",
-        "name": "TestTab",
-        "icon": "dashboard",
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "1f575f8454071d2e",
+        "id": "148a611776ecc792",
         "type": "ui-page",
-        "name": "Page 1",
-        "ui": "661007c6148e5264",
-        "path": "/lolin",
+        "name": "LOLIN Thermometer",
+        "ui": "b9eab409d5cf2da1",
+        "path": "/LOLIN",
         "icon": "home",
         "layout": "grid",
-        "theme": "5f1f17fe0fb3acf6",
+        "theme": "4b1b44b1246133af",
         "breakpoints": [
             {
                 "name": "Default",
@@ -857,7 +732,7 @@
         "disabled": "false"
     },
     {
-        "id": "661007c6148e5264",
+        "id": "b9eab409d5cf2da1",
         "type": "ui-base",
         "name": "My Dashboard",
         "path": "/dashboard",
@@ -877,7 +752,7 @@
         "allowInstall": false
     },
     {
-        "id": "5f1f17fe0fb3acf6",
+        "id": "4b1b44b1246133af",
         "type": "ui-theme",
         "name": "Default Theme",
         "colors": {
@@ -896,11 +771,10 @@
         }
     },
     {
-        "id": "116c36b517d0ec91",
+        "id": "5e6911043a0e7721",
         "type": "global-config",
         "env": [],
         "modules": {
-            "node-red-dashboard": "3.6.6",
             "node-red-node-smooth": "0.1.2",
             "@flowfuse/node-red-dashboard": "1.29.0"
         }

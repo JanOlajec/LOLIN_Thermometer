@@ -27,12 +27,17 @@
 #define DEFAULT_TEMP 20.0
 
 /**
+ * @brief Default initial humidity value used before first sensor reading.
+ */
+#define DEFAULT_HUMI 55.0
+
+/**
  * @brief Smoothing factor (Alpha) for the Exponential Smoothing filter.
  * * A lower value (closer to 0) results in stronger smoothing 
  * (more historical data influence), while a higher value (closer to 1) 
  * results in weaker smoothing (more current raw data influence).
  */
-#define ALPHA 0.02
+#define ALPHA 0.03
 
 /**
  * @brief Number of measurements stored in the circular trend buffer.
@@ -52,14 +57,27 @@
  * @brief Initializes the internal filtered value for the Exponential Smoothing filter.
  * @param t_init The initial (starting) temperature to set as the first stable value.
  */
-void Init_ExponentialSmooth(float t_init);
+void Init_TmprSmooth(float t_init);
+
+/**
+ * @brief Initializes the internal filtered value for the Exponential Smoothing filter for humidity.
+ * @param h_init The initial (starting) humidity to set as the first stable value.
+ */
+void Init_HumiSmooth(float h_init);
 
 /**
  * @brief Performs Exponential Smoothing on raw sensor data.
  * @param rawValue The current raw measured temperature value.
  * @return float The new, smoothed (filtered) value.
  */
-float Run_ExponentialSmooth(float rawValue);
+float Run_TmprSmooth(float rawValue);
+
+/**
+ * @brief Performs Exponential Smoothing on raw humidity data.
+ * @param rawValue The current raw measured humidity value.
+ * @return float The new, smoothed (filtered) humidity value.
+ */
+float Run_HumiSmooth(float rawValue);
 
 /**
  * @brief Initializes the circular trend buffer with an initial temperature value.

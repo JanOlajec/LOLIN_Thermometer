@@ -24,7 +24,13 @@
  * @brief Internal state variable for the Exponential Smoothing filter.
  * * This variable is maintained between calls to Run_ExponentialSmooth().
  */
-PRIVATE float DU_Filtered = DEFAULT_TEMP;
+PRIVATE float DU_TmprFiltered = DEFAULT_TEMP;
+
+/**
+ * @brief Internal state variable for the Exponential Smoothing filter for humidity.
+ * This variable is maintained between calls to Run_HumiSmooth().
+ */
+PRIVATE float DU_HumiFiltered = DEFAULT_HUMI;
 
 /**
  * @brief Circular buffer for storing temperature history for trend calculation.
@@ -45,8 +51,17 @@ PRIVATE UB DU_TmprTrendBufferIdx = 0;
  * This should be called once, during setup(), after the sensor returns valid data.
  * @param t_init The initial (starting) temperature to set as the first stable value for the filter calculation.
  */
-void Init_ExponentialSmooth(float t_init) {
-  DU_Filtered = t_init;
+void Init_TmprSmooth(float t_init) {
+  DU_TmprFiltered = t_init;
+}
+
+/**
+ * @brief Initializes the internal filtered value for the humidity filter.
+ * This should be called once, during setup(), after the sensor returns valid data.
+ * @param h_init The initial (starting) humidity to set as the first stable value for the filter calculation.
+ */
+void Init_HumiSmooth(float h_init) {
+  DU_HumiFiltered = h_init;
 }
 
 /**
@@ -63,15 +78,28 @@ void Init_TmprTrendBuffer(float t_init) {
 /**
  * @brief Performs Exponential Smoothing on raw sensor data.
  * This function filters noise from raw measurements using a global 
- * static variable 'DU_Filtered' (which is private to DataUtils.cpp) 
+ * static variable 'DU_TmprFiltered' (which is private to DataUtils.cpp) 
  * and the smoothing constant ALPHA.
  * @param rawValue The current raw measured temperature value.
  * @return float The new, smoothed (filtered) value.
  */
-float Run_ExponentialSmooth(float rawValue) {
+float Run_TmprSmooth(float rawValue) {
   /* Formula: filtered = (ALPHA * New Raw) + ((1.0 - ALPHA) * Previous filtered) */
-  DU_Filtered = (ALPHA * rawValue) + ((1.0 - ALPHA) * DU_Filtered);
-  return DU_Filtered;
+  DU_TmprFiltered = (ALPHA * rawValue) + ((1.0 - ALPHA) * DU_TmprFiltered);
+  return DU_TmprFiltered;
+}
+
+/**
+ * @brief Performs Exponential Smoothing on raw humidity sensor data.
+ * This function filters noise from raw humidity measurements using a global
+ * static variable 'DU_HumiFiltered' and the smoothing constant ALPHA.
+ * @param rawValue The current raw measured humidity value.
+ * @return float The new, smoothed (filtered) humidity value.
+ */
+float Run_HumiSmooth(float rawValue) {
+  /* Formula: filtered = (ALPHA * New Raw) + ((1.0 - ALPHA) * Previous filtered) */
+  DU_HumiFiltered = (ALPHA * rawValue) + ((1.0 - ALPHA) * DU_HumiFiltered);
+  return DU_HumiFiltered;
 }
 
 /**
@@ -92,16 +120,17 @@ void AddTmprToTrendBuffer(float newTmpr) {
 SB GetTemperatureTrend() {
   UB newestIdx;
   // Index of the oldest value (where the next write will occur)
-  UB oldestIdx = DU_TmprTrendBufferIdx; 
+  // Index where the next write will occur (points to the oldest value in the buffer)
+  UB nextWriteIdx = DU_TmprTrendBufferIdx; 
 
-  // The newest index is the one before the oldest index in the circular buffer
+  // The newest index is the one before the next write index in the circular buffer
   if(0 == DU_TmprTrendBufferIdx) {
     newestIdx = TREND_COUNT - 1;
   } else {
     newestIdx = DU_TmprTrendBufferIdx - 1;
   }
   
-  float oldestTemp = DU_TmprTrendBuffer[oldestIdx];
+  float oldestTemp = DU_TmprTrendBuffer[nextWriteIdx];
   float newestTemp = DU_TmprTrendBuffer[newestIdx];
 
   if (newestTemp > oldestTemp + TREND_THRESHOLD) {
