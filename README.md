@@ -4,35 +4,62 @@ This project is an embedded application for the LOLIN D1 Mini Pro (ESP8266) that
 
 ## Key Features
 
-* **SHT31 Sensor Integration**: Reads current temperature and relative humidity.
-* **Exponential Smoothing Filter**: Stabilizes temperature readings using a low $\alpha$ (alpha) factor (`0.03`) for high noise reduction.
-* **Temperature Trend Analysis**: Implements a circular buffer (`TREND_COUNT = 10`) to determine if the temperature is rising (↑), falling (↓), or stable (-) over the last set of measurements.
-* **Display Output**: Shows filtered temperature (large font), raw temperature, rounded humidity, and the current trend.
-* **Modular Design**: Code is split into `DataUtils.h/.cpp` for data processing and `Global.h` for core type definitions (`UB`, `SB`, `PRIVATE`).
+* **SHT31 Sensor Integration**: Reads current temperature and relative humidity
+* **Data Processing**:
+  * Exponential Smoothing Filter: Stabilizes temperature readings using a low $\alpha$ (alpha) factor of `0.03` for high noise reduction
+  * Round-to-decimal precision control 
+  * Temperature trend analysis with circular buffer (10 samples)
+* **Display Output**: Shows filtered temperature (large font), raw temperature, humidity, and trend indicators (↑,↓,-)
+* **MQTT Integration**:
+  * Publishes temperature and humidity data as JSON payloads
+  * Topics: `home/thermometer/temperature`, `home/thermometer/humidity`
+  * Status reporting on `home/thermometer/status`
+* **Node-RED Dashboard**: Includes flow configuration for data visualization
 
----
+## Hardware Configuration
 
-## Hardware and Configuration
-
-| Component | Model/Chip | Connection/Address | Notes |
-| :--- | :--- | :--- | :--- |
-| **Microcontroller** | LOLIN(WEMOS) D1 mini Pro (ESP8266) | - | Arduino Core for ESP8266 required. |
-| **Temp/Humidity Sensor** | SHT31 Digital Humidity & Temp Sensor | I2C Address: `0x45` | Uses `Adafruit SHT31` library. |
-| **Display** | SSD1306 OLED Display 128x64 | I2C Address: `0x3C` | Uses `Adafruit GFX` and `Adafruit SSD1306` libraries. |
-
----
+| Component | Configuration | Details |
+|-----------|--------------|----------|
+| **MCU** | LOLIN D1 Mini Pro v2 | ESP8266 based board |
+| **Temperature Sensor** | SHT31 | I2C Address: `0x45` |
+| **Display** | SSD1306 OLED 128x64 | I2C Address: `0x3C` |
+| **Network** | WiFi + MQTT | Static IP: 192.168.241.120 |
 
 ## Project Structure
 
 | File | Description |
-| :--- | :--- |
-| `LOLIN_Thermometer.ino` | Main sketch file containing `setup()` and `loop()`, sensor initialization, and display logic. |
-| `DataUtils.h` | Header file defining smoothing constants (`ALPHA`, `TREND_COUNT`) and public prototypes for data processing functions (filter, trend buffer). |
-| `DataUtils.cpp` | Implementation file for the Exponential Smoothing filter and the circular buffer logic. |
-| `Global.h` | Global definitions, including type aliases (`UB`, `SB`) and the `PRIVATE` macro. |
+|------|-------------|
+| `LOLIN_Thermometer.ino` | Main application with setup/loop and MQTT handling |
+| `DataUtils.h/.cpp` | Data processing utilities (smoothing, trend analysis) |
+| `Global.h` | Type definitions and global configuration |
+| `NodeRed_flow_LOLINTmpr.json` | Node-RED dashboard configuration |
 
----
+## Data Processing Features
+
+### Exponential Smoothing
+The project uses exponential smoothing with the formula:
+
+$filtered = (\alpha \times raw) + ((1 - \alpha) \times previous)$
+
+Where $\alpha = 0.03$ for strong noise reduction.
+
+### Temperature Trend Analysis
+* Buffer Size: 10 samples
+* Threshold: ±0.1°C change
+* Indicators: Rising (↑), Falling (↓), Stable (-)
+
+## Dependencies
+
+* `Wire.h` - I2C communication
+* `Adafruit_SHT31` - Temperature sensor driver
+* `Adafruit_GFX` - Graphics library
+* `Adafruit_SSD1306` - OLED display driver
+* `ESP8266WiFi` - WiFi connectivity
+* `PubSubClient` - MQTT client
+* `ArduinoJson` - JSON serialization
 
 ## License
 
-This project is licensed under the **MIT License**.
+This project is licensed under the MIT License.
+
+Copyright (c) 2025 Jan OLAJEC, All rights reserved.
