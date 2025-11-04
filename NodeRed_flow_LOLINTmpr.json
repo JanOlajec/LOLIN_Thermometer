@@ -24,7 +24,8 @@
         "y": 160,
         "wires": [
             [
-                "3f4cb1d22bd0dfe4"
+                "3f4cb1d22bd0dfe4",
+                "25cbb1a4af25fb0b"
             ]
         ]
     },
@@ -64,6 +65,7 @@
         "id": "d336e0ce41a7fbcc",
         "type": "smooth",
         "z": "1e59d6a3e5a88154",
+        "d": true,
         "name": "20 to 1",
         "property": "payload",
         "action": "mean",
@@ -102,10 +104,10 @@
         "id": "4fa6ad5dbe65ef9f",
         "type": "smooth",
         "z": "1e59d6a3e5a88154",
-        "name": "30 to 1",
+        "name": "40 to 1",
         "property": "payload",
         "action": "mean",
-        "count": "30",
+        "count": "40",
         "round": "",
         "mult": "single",
         "reduce": true,
@@ -172,6 +174,7 @@
         "id": "feb63c859cdf16e8",
         "type": "ui-chart",
         "z": "1e59d6a3e5a88154",
+        "d": true,
         "group": "9a3a1f181c9b4cfe",
         "name": "Tmpr 1hod",
         "label": "Teplota [C] za 1hod",
@@ -296,6 +299,7 @@
         "id": "7e1a5cf5a191e007",
         "type": "ui-chart",
         "z": "1e59d6a3e5a88154",
+        "d": true,
         "group": "9a3a1f181c9b4cfe",
         "name": "Tmpr 12hod",
         "label": "Teplota [C] za 12hod",
@@ -358,6 +362,7 @@
         "id": "731368982ecf7dfe",
         "type": "change",
         "z": "1e59d6a3e5a88154",
+        "d": true,
         "name": "RoundTo2Decimal",
         "rules": [
             {
@@ -547,10 +552,10 @@
         "id": "3fe8d3f388db0bf8",
         "type": "smooth",
         "z": "1e59d6a3e5a88154",
-        "name": "20 to 1",
+        "name": "40 to 1",
         "property": "payload",
         "action": "mean",
-        "count": "20",
+        "count": "40",
         "round": "",
         "mult": "single",
         "reduce": true,
@@ -567,8 +572,8 @@
         "type": "ui-chart",
         "z": "1e59d6a3e5a88154",
         "group": "9a3a1f181c9b4cfe",
-        "name": "Humi 12hod",
-        "label": "Vlhkost [%] za 12hod",
+        "name": "Humi 24hod",
+        "label": "Vlhkost [%] za 24hod",
         "order": 6,
         "chartType": "line",
         "category": "topic",
@@ -592,7 +597,7 @@
         "pointShape": "circle",
         "pointRadius": 4,
         "showLegend": false,
-        "removeOlder": "12",
+        "removeOlder": "24",
         "removeOlderUnit": "3600",
         "removeOlderPoints": "",
         "colors": [
@@ -763,6 +768,7 @@
         "id": "428819455eab24e8",
         "type": "smooth",
         "z": "1e59d6a3e5a88154",
+        "d": true,
         "name": "2 to 1",
         "property": "payload",
         "action": "mean",
@@ -782,6 +788,7 @@
         "id": "0f9ad7090faee462",
         "type": "change",
         "z": "1e59d6a3e5a88154",
+        "d": true,
         "name": "RoundTo2Decimal",
         "rules": [
             {
@@ -803,6 +810,205 @@
             [
                 "feb63c859cdf16e8"
             ]
+        ]
+    },
+    {
+        "id": "25cbb1a4af25fb0b",
+        "type": "function",
+        "z": "1e59d6a3e5a88154",
+        "name": "Struct_teplota",
+        "func": "// Získa hodnotu teploty z MQTT payloadu (napr. 22.17)\nconst tempValue = msg.payload.value;\n\n// Nová štruktúra - posielame iba objekt 'fields'\n// Uzol InfluxDB out (s nastaveným Measurement: teplota) automaticky vezme toto ako fields.\nmsg.payload = {\n    value: tempValue\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 80,
+        "wires": [
+            [
+                "6d0643c8e776c1ef"
+            ]
+        ]
+    },
+    {
+        "id": "abadfc14f45a2a30",
+        "type": "debug",
+        "z": "1e59d6a3e5a88154",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "6d0643c8e776c1ef",
+        "type": "influxdb out",
+        "z": "1e59d6a3e5a88154",
+        "influxdb": "1a463d669d42977d",
+        "name": "InfluxDB iot_data",
+        "measurement": "teplota",
+        "precision": "ms",
+        "retentionPolicy": "seven_days",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 610,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "c55911940b890721",
+        "type": "inject",
+        "z": "1e59d6a3e5a88154",
+        "name": "Dopyt do DB",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "ReadDdata",
+        "payloadType": "str",
+        "x": 120,
+        "y": 900,
+        "wires": [
+            [
+                "8807db686d3c576c"
+            ]
+        ],
+        "info": "Note: msg.payload = (String)\"ReadDdata\" - is not relevant, it is ignored by DB"
+    },
+    {
+        "id": "8807db686d3c576c",
+        "type": "influxdb in",
+        "z": "1e59d6a3e5a88154",
+        "influxdb": "1a463d669d42977d",
+        "name": "DB 7day",
+        "query": "SELECT mean(\"value\") FROM \"teplota\" WHERE time > now() - 7d GROUP BY time(30m) fill(null) tz('Europe/Bratislava')",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 320,
+        "y": 900,
+        "wires": [
+            [
+                "abadfc14f45a2a30",
+                "206d0696680d871d"
+            ]
+        ]
+    },
+    {
+        "id": "206d0696680d871d",
+        "type": "function",
+        "z": "1e59d6a3e5a88154",
+        "name": "function 1",
+        "func": "// Predpokladáme, že vstupom je pole objektov v msg.payload\nconst data = msg.payload;\n\n// Názov série, ktorý sa zobrazí v legende grafu\nconst seriesName = \"teplota\"; \n\n// Premena dát na požadovaný formát\nconst chartData = data\n    // 1. FILTRÁCIA (voliteľné, ale odporúčané): Odstráni celé dátové body s null hodnotami,\n    // aby sa neobjavovali medzery v grafe, ak ich nechceme.\n    .filter(item => item.mean !== null && item.mean !== undefined)\n    \n    // 2. MAPOVANIE: Prevod zostávajúcich platných dát\n    .map(item => {\n        // Časová značka musí byť v milisekundách\n        const timestamp_ms = new Date(item.time).getTime();\n        \n        // Hodnota 'item.mean' je už v tomto bode zaručene číslo (nie null)\n        \n        // Zaokrúhlenie hodnoty 'mean' na 3 desatinné miesta\n        const roundedMean = parseFloat(item.mean.toFixed(3)); \n\n        // Vytvorenie objektu pre graf\n        return {\n            \"series\" : seriesName,\n            \"x\": timestamp_ms,\n            \"y\": roundedMean \n        };\n    });\n\n// Vytvorenie finálneho objektu pre Chart node\nmsg.payload = chartData\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 900,
+        "wires": [
+            [
+                "67f5af1db598dbe4",
+                "fa6bc264411495fa"
+            ]
+        ]
+    },
+    {
+        "id": "67f5af1db598dbe4",
+        "type": "debug",
+        "z": "1e59d6a3e5a88154",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "fa6bc264411495fa",
+        "type": "ui-chart",
+        "z": "1e59d6a3e5a88154",
+        "group": "9a3a1f181c9b4cfe",
+        "name": "Teplota 7dni (DB)",
+        "label": "Teplota z (DB)",
+        "order": 9007199254740991,
+        "chartType": "line",
+        "category": "teplota",
+        "categoryType": "str",
+        "xAxisLabel": "",
+        "xAxisProperty": "x",
+        "xAxisPropertyType": "property",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "y",
+        "yAxisPropertyType": "property",
+        "ymin": "",
+        "ymax": "",
+        "bins": 10,
+        "action": "replace",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": false,
+        "removeOlder": "7",
+        "removeOlderUnit": "86400",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": 8,
+        "className": "",
+        "interpolation": "linear",
+        "x": 770,
+        "y": 900,
+        "wires": [
+            []
         ]
     },
     {
@@ -849,6 +1055,21 @@
         "visible": "true",
         "disabled": "false",
         "groupType": "default"
+    },
+    {
+        "id": "1a463d669d42977d",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "iot_data",
+        "name": "iot_data DB",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
     },
     {
         "id": "148a611776ecc792",
@@ -926,12 +1147,13 @@
         }
     },
     {
-        "id": "816ecf478897f9ad",
+        "id": "7c3293a64f3595b6",
         "type": "global-config",
         "env": [],
         "modules": {
             "node-red-node-smooth": "0.1.2",
-            "@flowfuse/node-red-dashboard": "1.29.0"
+            "@flowfuse/node-red-dashboard": "1.29.0",
+            "node-red-contrib-influxdb": "0.7.0"
         }
     }
 ]
