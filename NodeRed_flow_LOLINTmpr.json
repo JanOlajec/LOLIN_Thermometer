@@ -8,6 +8,141 @@
         "env": []
     },
     {
+        "id": "0e745f397e5b7cec",
+        "type": "mqtt-broker",
+        "name": "Pihol broker",
+        "broker": "192.168.241.111",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "b9eab409d5cf2da1",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "4b1b44b1246133af",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "148a611776ecc792",
+        "type": "ui-page",
+        "name": "LOLIN Thermometer",
+        "ui": "b9eab409d5cf2da1",
+        "path": "/LOLIN",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "4b1b44b1246133af",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": true,
+        "disabled": false
+    },
+    {
+        "id": "9a3a1f181c9b4cfe",
+        "type": "ui-group",
+        "name": "Teplota",
+        "page": "148a611776ecc792",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "1a463d669d42977d",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "iot_data",
+        "name": "iot_data DB",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
         "id": "ca376d73ba541abe",
         "type": "mqtt in",
         "z": "1e59d6a3e5a88154",
@@ -20,12 +155,13 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 90,
-        "y": 160,
+        "x": 130,
+        "y": 280,
         "wires": [
             [
                 "3f4cb1d22bd0dfe4",
-                "25cbb1a4af25fb0b"
+                "25cbb1a4af25fb0b",
+                "a36dc8e6f83690ab"
             ]
         ]
     },
@@ -48,8 +184,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 330,
-        "y": 160,
+        "x": 370,
+        "y": 280,
         "wires": [
             [
                 "d336e0ce41a7fbcc",
@@ -73,8 +209,8 @@
         "round": "",
         "mult": "single",
         "reduce": true,
-        "x": 570,
-        "y": 400,
+        "x": 610,
+        "y": 520,
         "wires": [
             [
                 "731368982ecf7dfe"
@@ -92,8 +228,8 @@
         "round": "",
         "mult": "single",
         "reduce": true,
-        "x": 570,
-        "y": 320,
+        "x": 610,
+        "y": 440,
         "wires": [
             [
                 "2255909e335cb6f2"
@@ -111,8 +247,8 @@
         "round": "",
         "mult": "single",
         "reduce": true,
-        "x": 570,
-        "y": 480,
+        "x": 610,
+        "y": 600,
         "wires": [
             [
                 "bedc96ec3733c676"
@@ -139,8 +275,8 @@
         "className": "",
         "value": "payload",
         "valueType": "msg",
-        "x": 1030,
-        "y": 160,
+        "x": 1070,
+        "y": 280,
         "wires": []
     },
     {
@@ -162,8 +298,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 790,
-        "y": 320,
+        "x": 830,
+        "y": 440,
         "wires": [
             [
                 "cb33d2ad43452282"
@@ -227,8 +363,8 @@
         "height": "5",
         "className": "",
         "interpolation": "linear",
-        "x": 1030,
-        "y": 240,
+        "x": 1070,
+        "y": 360,
         "wires": [
             []
         ]
@@ -289,8 +425,8 @@
         "height": "5",
         "className": "",
         "interpolation": "linear",
-        "x": 1030,
-        "y": 320,
+        "x": 1070,
+        "y": 440,
         "wires": [
             []
         ]
@@ -352,8 +488,8 @@
         "height": "5",
         "className": "",
         "interpolation": "linear",
-        "x": 1030,
-        "y": 400,
+        "x": 1070,
+        "y": 520,
         "wires": [
             []
         ]
@@ -378,8 +514,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 790,
-        "y": 400,
+        "x": 830,
+        "y": 520,
         "wires": [
             [
                 "7e1a5cf5a191e007"
@@ -405,8 +541,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 790,
-        "y": 480,
+        "x": 830,
+        "y": 600,
         "wires": [
             [
                 "3fd336a0bb5520a0"
@@ -469,8 +605,8 @@
         "height": "5",
         "className": "",
         "interpolation": "linear",
-        "x": 1030,
-        "y": 480,
+        "x": 1070,
+        "y": 600,
         "wires": [
             []
         ]
@@ -488,11 +624,12 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 100,
-        "y": 640,
+        "x": 140,
+        "y": 760,
         "wires": [
             [
-                "98afe43557ae7cc1"
+                "98afe43557ae7cc1",
+                "a36dc8e6f83690ab"
             ]
         ]
     },
@@ -515,8 +652,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 330,
-        "y": 640,
+        "x": 370,
+        "y": 760,
         "wires": [
             [
                 "49b889d688c93d53",
@@ -544,8 +681,8 @@
         "className": "",
         "value": "payload",
         "valueType": "msg",
-        "x": 1020,
-        "y": 640,
+        "x": 1060,
+        "y": 760,
         "wires": []
     },
     {
@@ -559,8 +696,8 @@
         "round": "",
         "mult": "single",
         "reduce": true,
-        "x": 570,
-        "y": 720,
+        "x": 610,
+        "y": 840,
         "wires": [
             [
                 "2117bf5fbf678b14"
@@ -623,8 +760,8 @@
         "height": "5",
         "className": "",
         "interpolation": "linear",
-        "x": 1030,
-        "y": 720,
+        "x": 1070,
+        "y": 840,
         "wires": [
             []
         ]
@@ -648,8 +785,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 790,
-        "y": 720,
+        "x": 830,
+        "y": 840,
         "wires": [
             [
                 "487b2b9faa3e4410"
@@ -667,8 +804,8 @@
         "round": "",
         "mult": "single",
         "reduce": true,
-        "x": 580,
-        "y": 560,
+        "x": 620,
+        "y": 680,
         "wires": [
             [
                 "9a8e6b08924071e6"
@@ -694,8 +831,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 790,
-        "y": 560,
+        "x": 830,
+        "y": 680,
         "wires": [
             [
                 "f1f594a990aaf0f7"
@@ -758,8 +895,8 @@
         "height": "5",
         "className": "",
         "interpolation": "linear",
-        "x": 1030,
-        "y": 560,
+        "x": 1070,
+        "y": 680,
         "wires": [
             []
         ]
@@ -776,8 +913,8 @@
         "round": "",
         "mult": "single",
         "reduce": true,
-        "x": 570,
-        "y": 240,
+        "x": 610,
+        "y": 360,
         "wires": [
             [
                 "0f9ad7090faee462"
@@ -804,8 +941,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 790,
-        "y": 240,
+        "x": 830,
+        "y": 360,
         "wires": [
             [
                 "feb63c859cdf16e8"
@@ -824,8 +961,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 360,
-        "y": 80,
+        "x": 400,
+        "y": 200,
         "wires": [
             [
                 "6d0643c8e776c1ef"
@@ -844,8 +981,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 680,
-        "y": 820,
+        "x": 1060,
+        "y": 180,
         "wires": []
     },
     {
@@ -862,35 +999,10 @@
         "retentionPolicyV18Flux": "",
         "org": "organisation",
         "bucket": "bucket",
-        "x": 610,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "c55911940b890721",
-        "type": "inject",
-        "z": "1e59d6a3e5a88154",
-        "name": "Dopyt do DB",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "60",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "ReadDdata",
-        "payloadType": "str",
-        "x": 120,
-        "y": 900,
-        "wires": [
-            [
-                "8807db686d3c576c"
-            ]
-        ],
-        "info": "Note: msg.payload = (String)\"ReadDdata\" - is not relevant, it is ignored by DB"
+        "x": 650,
+        "y": 200,
+        "wires": [],
+        "info": "Field 'measurment' is KEY to database.\r\n\r\ne.g. select for last values:\r\nSELECT * FROM teplota ORDER BY time DESC LIMIT 10"
     },
     {
         "id": "8807db686d3c576c",
@@ -903,8 +1015,8 @@
         "precision": "",
         "retentionPolicy": "",
         "org": "organisation",
-        "x": 320,
-        "y": 900,
+        "x": 860,
+        "y": 120,
         "wires": [
             [
                 "abadfc14f45a2a30",
@@ -924,8 +1036,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 520,
-        "y": 900,
+        "x": 1060,
+        "y": 120,
         "wires": [
             [
                 "67f5af1db598dbe4",
@@ -945,8 +1057,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 780,
-        "y": 1000,
+        "x": 1300,
+        "y": 180,
         "wires": []
     },
     {
@@ -956,7 +1068,7 @@
         "group": "9a3a1f181c9b4cfe",
         "name": "Teplota 7dni (DB)",
         "label": "Teplota z (DB)",
-        "order": 9007199254740991,
+        "order": 9,
         "chartType": "line",
         "category": "teplota",
         "categoryType": "str",
@@ -1005,155 +1117,278 @@
         "height": 8,
         "className": "",
         "interpolation": "linear",
-        "x": 770,
-        "y": 900,
+        "x": 1310,
+        "y": 120,
         "wires": [
             []
         ]
     },
     {
-        "id": "0e745f397e5b7cec",
-        "type": "mqtt-broker",
-        "name": "Pihol broker",
-        "broker": "192.168.241.111",
-        "port": 1883,
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": 4,
-        "keepalive": 60,
-        "cleansession": true,
-        "autoUnsubscribe": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthRetain": "false",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closeRetain": "false",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willRetain": "false",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
+        "id": "a36dc8e6f83690ab",
+        "type": "join",
+        "z": "1e59d6a3e5a88154",
+        "name": "Joint T and H",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 380,
+        "y": 940,
+        "wires": [
+            [
+                "e51320babcb90c4d"
+            ]
+        ]
     },
     {
-        "id": "9a3a1f181c9b4cfe",
-        "type": "ui-group",
-        "name": "Teplota",
-        "page": "148a611776ecc792",
+        "id": "ff7c4660f02ceb61",
+        "type": "debug",
+        "z": "1e59d6a3e5a88154",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1260,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "e51320babcb90c4d",
+        "type": "function",
+        "z": "1e59d6a3e5a88154",
+        "name": "function 2",
+        "func": "// Input structure now contains nested objects: \n// { \"home/thermometer/temperature\": { \"value\": 22.52, \"unit\": \"C\" }, ... }\n\nconst payloadIn = msg.payload;\n\n// Define field and tag names\nconst tempTopic = \"home/thermometer/temperature\";\nconst humTopic = \"home/thermometer/humidity\";\nconst measurementName = \"environment\";\nconst deviceTag = \"home/thermometer/hall\";\n\n// Helper function to safely extract the 'value' field and convert it to a float.\nfunction extractAndParse(topic) {\n    const data = payloadIn[topic];\n\n    // 1. Check if the object for the topic exists\n    if (!data || data.value === null || data.value === undefined) {\n        // If data is missing or value is null/undefined, return null\n        return null;\n    }\n\n    // 2. Access the nested 'value' key and attempt conversion\n    const value = data.value;\n    \n    // parseFloat is usually safe, but check for non-numeric input for robustness\n    if (typeof value === 'number') {\n        return value;\n    }\n    \n    const result = parseFloat(value);\n    \n    // Check if the result is NaN (Not a Number)\n    if (isNaN(result)) {\n        node.warn(`Warning: Could not parse numeric value for topic: ${topic}. Value was: ${value}`);\n        return null;\n    }\n    \n    return result;\n}\n\n\n// Recommended structure for writing to InfluxDB\n\nmsg.measurement = measurementName;\nmsg.payload = [\n    {\n        // Correct access path: payloadIn[topic].value\n        temperature: extractAndParse(tempTopic),\n        humidity: extractAndParse(humTopic)\n    },\n    {\n        device: deviceTag\n    }\n];\n\n// Log the final payload for debugging. Check the Node-RED debug tab.\n// node.warn(JSON.stringify(msg.payload));\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 940,
+        "wires": [
+            [
+                "bd2b0631ae74aa73"
+            ]
+        ]
+    },
+    {
+        "id": "bd2b0631ae74aa73",
+        "type": "influxdb out",
+        "z": "1e59d6a3e5a88154",
+        "influxdb": "1a463d669d42977d",
+        "name": "InfluxDB iot_data 2",
+        "measurement": "",
+        "precision": "ms",
+        "retentionPolicy": "seven_days",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 890,
+        "y": 940,
+        "wires": [],
+        "info": "Field 'measurment' is KEY to database. \r\nIn this case, the 'measurement' value is in msg paload:\r\n\r\ne.g.:\r\n[\r\n{\"temperature\":22.1,\"humidity\":70.8},\r\n{\"device\":\"home/thermometer/hall\"}\r\n]\r\n\r\ncode:\r\n\r\nmsg.measurement = measurementName;\r\nmsg.payload = [\r\n    {\r\n        // Correct access path: payloadIn[topic].value\r\n        temperature: extractAndParse(tempTopic),\r\n        humidity: extractAndParse(humTopic)\r\n    },\r\n    {\r\n        device: deviceTag\r\n    }\r\n];\r\n\r\n\r\ninflux\r\nUSE iot_data\r\nSELECT * FROM environment ORDER BY time DESC LIMIT 10\r\n\r\nwhere 'environment' is from msg.measurement"
+    },
+    {
+        "id": "9f91318068d9d9eb",
+        "type": "influxdb in",
+        "z": "1e59d6a3e5a88154",
+        "influxdb": "1a463d669d42977d",
+        "name": "DB 7day",
+        "query": "SELECT mean(\"humidity\") FROM \"environment\" WHERE time > now() - 7d GROUP BY time(30m) fill(null) tz('Europe/Bratislava')",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 860,
+        "y": 1020,
+        "wires": [
+            [
+                "ba72ca10259694b3"
+            ]
+        ]
+    },
+    {
+        "id": "ba72ca10259694b3",
+        "type": "function",
+        "z": "1e59d6a3e5a88154",
+        "name": "function 3",
+        "func": "// Predpokladáme, že vstupom je pole objektov v msg.payload\nconst data = msg.payload;\n\n// Názov série, ktorý sa zobrazí v legende grafu\nconst seriesName = \"vlhkost\"; \n\n// Premena dát na požadovaný formát\nconst chartData = data\n    // 1. FILTRÁCIA (voliteľné, ale odporúčané): Odstráni celé dátové body s null hodnotami,\n    // aby sa neobjavovali medzery v grafe, ak ich nechceme.\n    .filter(item => item.mean !== null && item.mean !== undefined)\n    \n    // 2. MAPOVANIE: Prevod zostávajúcich platných dát\n    .map(item => {\n        // Časová značka musí byť v milisekundách\n        const timestamp_ms = new Date(item.time).getTime();\n        \n        // Hodnota 'item.mean' je už v tomto bode zaručene číslo (nie null)\n        \n        // Zaokrúhlenie hodnoty 'mean' na 3 desatinné miesta\n        const roundedMean = parseFloat(item.mean.toFixed(3)); \n\n        // Vytvorenie objektu pre graf\n        return {\n            \"series\" : seriesName,\n            \"x\": timestamp_ms,\n            \"y\": roundedMean \n        };\n    });\n\n// Vytvorenie finálneho objektu pre Chart node\nmsg.payload = chartData\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 1020,
+        "wires": [
+            [
+                "2ae42b238470f622",
+                "ff7c4660f02ceb61"
+            ]
+        ]
+    },
+    {
+        "id": "2ae42b238470f622",
+        "type": "ui-chart",
+        "z": "1e59d6a3e5a88154",
+        "group": "9a3a1f181c9b4cfe",
+        "name": "Vlhkost 7dni (DB)",
+        "label": "Vlhkost z (DB)",
+        "order": 10,
+        "chartType": "line",
+        "category": "vlhkost",
+        "categoryType": "str",
+        "xAxisLabel": "",
+        "xAxisProperty": "x",
+        "xAxisPropertyType": "property",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "y",
+        "yAxisPropertyType": "property",
+        "ymin": "",
+        "ymax": "",
+        "bins": 10,
+        "action": "replace",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": false,
+        "removeOlder": "7",
+        "removeOlderUnit": "86400",
+        "removeOlderPoints": "",
+        "colors": [
+            "#ff0000",
+            "#0080ff",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
         "width": 6,
-        "height": 1,
-        "order": 1,
-        "showTitle": true,
+        "height": 8,
         "className": "",
-        "visible": "true",
-        "disabled": "false",
-        "groupType": "default"
+        "interpolation": "linear",
+        "x": 1290,
+        "y": 1020,
+        "wires": [
+            []
+        ]
     },
     {
-        "id": "1a463d669d42977d",
-        "type": "influxdb",
-        "hostname": "127.0.0.1",
-        "port": 8086,
-        "protocol": "http",
-        "database": "iot_data",
-        "name": "iot_data DB",
-        "usetls": false,
-        "tls": "",
-        "influxdbVersion": "1.x",
-        "url": "http://localhost:8086",
-        "timeout": 10,
-        "rejectUnauthorized": true
+        "id": "0b33ce620fd31093",
+        "type": "link out",
+        "z": "1e59d6a3e5a88154",
+        "name": "Trigger DB",
+        "mode": "link",
+        "links": [
+            "21ae07eaec576b34",
+            "29b46aa893c08346"
+        ],
+        "x": 295,
+        "y": 120,
+        "wires": []
     },
     {
-        "id": "148a611776ecc792",
-        "type": "ui-page",
-        "name": "LOLIN Thermometer",
-        "ui": "b9eab409d5cf2da1",
-        "path": "/LOLIN",
-        "icon": "home",
-        "layout": "grid",
-        "theme": "4b1b44b1246133af",
-        "breakpoints": [
+        "id": "055803a80ac55882",
+        "type": "inject",
+        "z": "1e59d6a3e5a88154",
+        "name": "Dopyt do DB",
+        "props": [
             {
-                "name": "Default",
-                "px": "0",
-                "cols": "3"
-            },
-            {
-                "name": "Tablet",
-                "px": "576",
-                "cols": "6"
-            },
-            {
-                "name": "Small Desktop",
-                "px": "768",
-                "cols": "9"
-            },
-            {
-                "name": "Desktop",
-                "px": "1024",
-                "cols": "12"
+                "p": "payload"
             }
         ],
-        "order": 1,
-        "className": "",
-        "visible": true,
-        "disabled": false
-    },
-    {
-        "id": "b9eab409d5cf2da1",
-        "type": "ui-base",
-        "name": "My Dashboard",
-        "path": "/dashboard",
-        "appIcon": "",
-        "includeClientData": true,
-        "acceptsClientConfig": [
-            "ui-notification",
-            "ui-control"
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "ReadDdata",
+        "payloadType": "str",
+        "x": 140,
+        "y": 120,
+        "wires": [
+            [
+                "0b33ce620fd31093"
+            ]
         ],
-        "showPathInSidebar": false,
-        "headerContent": "page",
-        "navigationStyle": "default",
-        "titleBarStyle": "default",
-        "showReconnectNotification": true,
-        "notificationDisplayTime": 1,
-        "showDisconnectNotification": true,
-        "allowInstall": false
+        "info": "Note: msg.payload = (String)\"ReadDdata\" - is not relevant, it is ignored by DB"
     },
     {
-        "id": "4b1b44b1246133af",
-        "type": "ui-theme",
-        "name": "Default Theme",
-        "colors": {
-            "surface": "#ffffff",
-            "primary": "#0094CE",
-            "bgPage": "#eeeeee",
-            "groupBg": "#ffffff",
-            "groupOutline": "#cccccc"
-        },
-        "sizes": {
-            "density": "default",
-            "pagePadding": "12px",
-            "groupGap": "12px",
-            "groupBorderRadius": "4px",
-            "widgetGap": "12px"
-        }
+        "id": "21ae07eaec576b34",
+        "type": "link in",
+        "z": "1e59d6a3e5a88154",
+        "name": "Triger DB OUT",
+        "links": [
+            "0b33ce620fd31093"
+        ],
+        "x": 735,
+        "y": 120,
+        "wires": [
+            [
+                "8807db686d3c576c"
+            ]
+        ]
     },
     {
-        "id": "7c3293a64f3595b6",
+        "id": "29b46aa893c08346",
+        "type": "link in",
+        "z": "1e59d6a3e5a88154",
+        "name": "Triger DB OUT",
+        "links": [
+            "0b33ce620fd31093"
+        ],
+        "x": 705,
+        "y": 1020,
+        "wires": [
+            [
+                "9f91318068d9d9eb"
+            ]
+        ]
+    },
+    {
+        "id": "7f2a5d986ceb01e0",
         "type": "global-config",
         "env": [],
         "modules": {
-            "node-red-node-smooth": "0.1.2",
             "@flowfuse/node-red-dashboard": "1.29.0",
-            "node-red-contrib-influxdb": "0.7.0"
+            "node-red-contrib-influxdb": "0.7.0",
+            "node-red-node-smooth": "0.1.2"
         }
     }
 ]
