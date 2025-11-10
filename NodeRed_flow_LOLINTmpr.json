@@ -105,13 +105,13 @@
             {
                 "name": "Desktop",
                 "px": "1024",
-                "cols": "12"
+                "cols": "9"
             }
         ],
         "order": 1,
         "className": "",
-        "visible": true,
-        "disabled": false
+        "visible": "true",
+        "disabled": "false"
     },
     {
         "id": "9a3a1f181c9b4cfe",
@@ -160,7 +160,6 @@
         "wires": [
             [
                 "3f4cb1d22bd0dfe4",
-                "25cbb1a4af25fb0b",
                 "a36dc8e6f83690ab"
             ]
         ]
@@ -188,20 +187,17 @@
         "y": 280,
         "wires": [
             [
-                "d336e0ce41a7fbcc",
                 "fb820ddf08dc2cae",
                 "4fa6ad5dbe65ef9f",
                 "8170ac4f122f046e",
-                "c2c4ce9e2793123e",
-                "428819455eab24e8"
+                "c2c4ce9e2793123e"
             ]
         ]
     },
     {
-        "id": "d336e0ce41a7fbcc",
+        "id": "fb820ddf08dc2cae",
         "type": "smooth",
         "z": "1e59d6a3e5a88154",
-        "d": true,
         "name": "20 to 1",
         "property": "payload",
         "action": "mean",
@@ -210,26 +206,7 @@
         "mult": "single",
         "reduce": true,
         "x": 610,
-        "y": 520,
-        "wires": [
-            [
-                "731368982ecf7dfe"
-            ]
-        ]
-    },
-    {
-        "id": "fb820ddf08dc2cae",
-        "type": "smooth",
-        "z": "1e59d6a3e5a88154",
-        "name": "10 to 1",
-        "property": "payload",
-        "action": "mean",
-        "count": "10",
-        "round": "",
-        "mult": "single",
-        "reduce": true,
-        "x": 610,
-        "y": 440,
+        "y": 360,
         "wires": [
             [
                 "2255909e335cb6f2"
@@ -240,15 +217,15 @@
         "id": "4fa6ad5dbe65ef9f",
         "type": "smooth",
         "z": "1e59d6a3e5a88154",
-        "name": "40 to 1",
+        "name": "60 to 1",
         "property": "payload",
         "action": "mean",
-        "count": "40",
+        "count": "60",
         "round": "",
         "mult": "single",
         "reduce": true,
         "x": 610,
-        "y": 600,
+        "y": 440,
         "wires": [
             [
                 "bedc96ec3733c676"
@@ -264,7 +241,7 @@
         "width": "1",
         "height": "1",
         "name": "Temperature",
-        "label": "Teplota [C]:",
+        "label": "Temperature [C]:",
         "format": "{{msg.payload}}",
         "layout": "row-left",
         "style": false,
@@ -275,7 +252,7 @@
         "className": "",
         "value": "payload",
         "valueType": "msg",
-        "x": 1070,
+        "x": 1110,
         "y": 280,
         "wires": []
     },
@@ -298,8 +275,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 830,
-        "y": 440,
+        "x": 850,
+        "y": 360,
         "wires": [
             [
                 "cb33d2ad43452282"
@@ -307,76 +284,13 @@
         ]
     },
     {
-        "id": "feb63c859cdf16e8",
-        "type": "ui-chart",
-        "z": "1e59d6a3e5a88154",
-        "d": true,
-        "group": "9a3a1f181c9b4cfe",
-        "name": "Tmpr 1hod",
-        "label": "Teplota [C] za 1hod",
-        "order": 3,
-        "chartType": "line",
-        "category": "topic",
-        "categoryType": "msg",
-        "xAxisLabel": "",
-        "xAxisProperty": "",
-        "xAxisPropertyType": "timestamp",
-        "xAxisType": "time",
-        "xAxisFormat": "",
-        "xAxisFormatType": "auto",
-        "xmin": "",
-        "xmax": "",
-        "yAxisLabel": "",
-        "yAxisProperty": "payload",
-        "yAxisPropertyType": "msg",
-        "ymin": "",
-        "ymax": "",
-        "bins": 10,
-        "action": "append",
-        "stackSeries": false,
-        "pointShape": "circle",
-        "pointRadius": 4,
-        "showLegend": false,
-        "removeOlder": 1,
-        "removeOlderUnit": "3600",
-        "removeOlderPoints": "",
-        "colors": [
-            "#0095ff",
-            "#ff0000",
-            "#ff7f0e",
-            "#2ca02c",
-            "#a347e1",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "textColor": [
-            "#666666"
-        ],
-        "textColorDefault": true,
-        "gridColor": [
-            "#e5e5e5"
-        ],
-        "gridColorDefault": true,
-        "width": "6",
-        "height": "5",
-        "className": "",
-        "interpolation": "linear",
-        "x": 1070,
-        "y": 360,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "cb33d2ad43452282",
         "type": "ui-chart",
         "z": "1e59d6a3e5a88154",
         "group": "9a3a1f181c9b4cfe",
-        "name": "Tmpr 6hod",
-        "label": "Teplota [C] za 6hod",
-        "order": 4,
+        "name": "Tmpr 6 hours",
+        "label": "Temperature [C] per 6 hours",
+        "order": 3,
         "chartType": "line",
         "category": "topic",
         "categoryType": "msg",
@@ -425,101 +339,10 @@
         "height": "5",
         "className": "",
         "interpolation": "linear",
-        "x": 1070,
-        "y": 440,
+        "x": 1110,
+        "y": 360,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "7e1a5cf5a191e007",
-        "type": "ui-chart",
-        "z": "1e59d6a3e5a88154",
-        "d": true,
-        "group": "9a3a1f181c9b4cfe",
-        "name": "Tmpr 12hod",
-        "label": "Teplota [C] za 12hod",
-        "order": 5,
-        "chartType": "line",
-        "category": "topic",
-        "categoryType": "msg",
-        "xAxisLabel": "",
-        "xAxisProperty": "",
-        "xAxisPropertyType": "timestamp",
-        "xAxisType": "time",
-        "xAxisFormat": "",
-        "xAxisFormatType": "auto",
-        "xmin": "",
-        "xmax": "",
-        "yAxisLabel": "",
-        "yAxisProperty": "payload",
-        "yAxisPropertyType": "msg",
-        "ymin": "",
-        "ymax": "",
-        "bins": 10,
-        "action": "append",
-        "stackSeries": false,
-        "pointShape": "circle",
-        "pointRadius": 4,
-        "showLegend": false,
-        "removeOlder": "12",
-        "removeOlderUnit": "3600",
-        "removeOlderPoints": "",
-        "colors": [
-            "#0095ff",
-            "#ff0000",
-            "#ff7f0e",
-            "#2ca02c",
-            "#a347e1",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "textColor": [
-            "#666666"
-        ],
-        "textColorDefault": true,
-        "gridColor": [
-            "#e5e5e5"
-        ],
-        "gridColorDefault": true,
-        "width": "6",
-        "height": "5",
-        "className": "",
-        "interpolation": "linear",
-        "x": 1070,
-        "y": 520,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "731368982ecf7dfe",
-        "type": "change",
-        "z": "1e59d6a3e5a88154",
-        "d": true,
-        "name": "RoundTo2Decimal",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "$round(payload, 2)",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 830,
-        "y": 520,
-        "wires": [
-            [
-                "7e1a5cf5a191e007"
-            ]
         ]
     },
     {
@@ -541,8 +364,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 830,
-        "y": 600,
+        "x": 850,
+        "y": 440,
         "wires": [
             [
                 "3fd336a0bb5520a0"
@@ -554,9 +377,9 @@
         "type": "ui-chart",
         "z": "1e59d6a3e5a88154",
         "group": "9a3a1f181c9b4cfe",
-        "name": "Tmpr 24hod",
-        "label": "Teplota [C] za 24hod",
-        "order": 7,
+        "name": "Tmpr 24 hours",
+        "label": "Temperature [C] per 24 hours",
+        "order": 5,
         "chartType": "line",
         "category": "topic",
         "categoryType": "msg",
@@ -605,8 +428,8 @@
         "height": "5",
         "className": "",
         "interpolation": "linear",
-        "x": 1070,
-        "y": 600,
+        "x": 1120,
+        "y": 440,
         "wires": [
             []
         ]
@@ -625,7 +448,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 140,
-        "y": 760,
+        "y": 600,
         "wires": [
             [
                 "98afe43557ae7cc1",
@@ -653,7 +476,7 @@
         "to": "",
         "reg": false,
         "x": 370,
-        "y": 760,
+        "y": 600,
         "wires": [
             [
                 "49b889d688c93d53",
@@ -670,7 +493,7 @@
         "width": "1",
         "height": "1",
         "name": "Humidity",
-        "label": "Vlhkost [%]:",
+        "label": "Humidity [%]:",
         "format": "{{msg.payload}}",
         "layout": "row-left",
         "style": false,
@@ -681,15 +504,15 @@
         "className": "",
         "value": "payload",
         "valueType": "msg",
-        "x": 1060,
-        "y": 760,
+        "x": 1100,
+        "y": 600,
         "wires": []
     },
     {
         "id": "3fe8d3f388db0bf8",
         "type": "smooth",
         "z": "1e59d6a3e5a88154",
-        "name": "40 to 1",
+        "name": "60 to 1",
         "property": "payload",
         "action": "mean",
         "count": "40",
@@ -697,7 +520,7 @@
         "mult": "single",
         "reduce": true,
         "x": 610,
-        "y": 840,
+        "y": 680,
         "wires": [
             [
                 "2117bf5fbf678b14"
@@ -709,9 +532,9 @@
         "type": "ui-chart",
         "z": "1e59d6a3e5a88154",
         "group": "9a3a1f181c9b4cfe",
-        "name": "Humi 24hod",
-        "label": "Vlhkost [%] za 24hod",
-        "order": 6,
+        "name": "Humi 24 hours",
+        "label": "Humidity [%] per 24 hours",
+        "order": 4,
         "chartType": "line",
         "category": "topic",
         "categoryType": "msg",
@@ -760,8 +583,8 @@
         "height": "5",
         "className": "",
         "interpolation": "linear",
-        "x": 1070,
-        "y": 840,
+        "x": 1120,
+        "y": 680,
         "wires": [
             []
         ]
@@ -785,8 +608,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 830,
-        "y": 840,
+        "x": 850,
+        "y": 680,
         "wires": [
             [
                 "487b2b9faa3e4410"
@@ -797,15 +620,15 @@
         "id": "c2c4ce9e2793123e",
         "type": "smooth",
         "z": "1e59d6a3e5a88154",
-        "name": "200 to 1",
+        "name": "300 to 1",
         "property": "payload",
         "action": "mean",
-        "count": "200",
+        "count": "300",
         "round": "",
         "mult": "single",
         "reduce": true,
         "x": 620,
-        "y": 680,
+        "y": 520,
         "wires": [
             [
                 "9a8e6b08924071e6"
@@ -831,8 +654,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 830,
-        "y": 680,
+        "x": 850,
+        "y": 520,
         "wires": [
             [
                 "f1f594a990aaf0f7"
@@ -844,9 +667,9 @@
         "type": "ui-chart",
         "z": "1e59d6a3e5a88154",
         "group": "9a3a1f181c9b4cfe",
-        "name": "Tmpr 7 dni",
-        "label": "Teplota [C] za 7dni",
-        "order": 8,
+        "name": "Tmpr 7 days",
+        "label": "Temperature [C] per 7 days",
+        "order": 6,
         "chartType": "line",
         "category": "topic",
         "categoryType": "msg",
@@ -895,131 +718,27 @@
         "height": "5",
         "className": "",
         "interpolation": "linear",
-        "x": 1070,
-        "y": 680,
+        "x": 1110,
+        "y": 520,
         "wires": [
             []
         ]
-    },
-    {
-        "id": "428819455eab24e8",
-        "type": "smooth",
-        "z": "1e59d6a3e5a88154",
-        "d": true,
-        "name": "2 to 1",
-        "property": "payload",
-        "action": "mean",
-        "count": "2",
-        "round": "",
-        "mult": "single",
-        "reduce": true,
-        "x": 610,
-        "y": 360,
-        "wires": [
-            [
-                "0f9ad7090faee462"
-            ]
-        ]
-    },
-    {
-        "id": "0f9ad7090faee462",
-        "type": "change",
-        "z": "1e59d6a3e5a88154",
-        "d": true,
-        "name": "RoundTo2Decimal",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "$round(payload, 2)",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 830,
-        "y": 360,
-        "wires": [
-            [
-                "feb63c859cdf16e8"
-            ]
-        ]
-    },
-    {
-        "id": "25cbb1a4af25fb0b",
-        "type": "function",
-        "z": "1e59d6a3e5a88154",
-        "name": "Struct_teplota",
-        "func": "// Získa hodnotu teploty z MQTT payloadu (napr. 22.17)\nconst tempValue = msg.payload.value;\n\n// Nová štruktúra - posielame iba objekt 'fields'\n// Uzol InfluxDB out (s nastaveným Measurement: teplota) automaticky vezme toto ako fields.\nmsg.payload = {\n    value: tempValue\n};\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 400,
-        "y": 200,
-        "wires": [
-            [
-                "6d0643c8e776c1ef"
-            ]
-        ]
-    },
-    {
-        "id": "abadfc14f45a2a30",
-        "type": "debug",
-        "z": "1e59d6a3e5a88154",
-        "name": "debug 1",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1060,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "6d0643c8e776c1ef",
-        "type": "influxdb out",
-        "z": "1e59d6a3e5a88154",
-        "influxdb": "1a463d669d42977d",
-        "name": "InfluxDB iot_data",
-        "measurement": "teplota",
-        "precision": "ms",
-        "retentionPolicy": "seven_days",
-        "database": "database",
-        "precisionV18FluxV20": "ms",
-        "retentionPolicyV18Flux": "",
-        "org": "organisation",
-        "bucket": "bucket",
-        "x": 650,
-        "y": 200,
-        "wires": [],
-        "info": "Field 'measurment' is KEY to database.\r\n\r\ne.g. select for last values:\r\nSELECT * FROM teplota ORDER BY time DESC LIMIT 10"
     },
     {
         "id": "8807db686d3c576c",
         "type": "influxdb in",
         "z": "1e59d6a3e5a88154",
         "influxdb": "1a463d669d42977d",
-        "name": "DB 7day",
-        "query": "SELECT mean(\"value\") FROM \"teplota\" WHERE time > now() - 7d GROUP BY time(30m) fill(null) tz('Europe/Bratislava')",
+        "name": "Tmpr DB 7day",
+        "query": "SELECT mean(\"temperature\") FROM \"environment\" WHERE time > now() - 7d GROUP BY time(30m) fill(null) tz('Europe/Bratislava')",
         "rawOutput": false,
         "precision": "",
         "retentionPolicy": "",
         "org": "organisation",
-        "x": 860,
-        "y": 120,
+        "x": 640,
+        "y": 900,
         "wires": [
             [
-                "abadfc14f45a2a30",
                 "206d0696680d871d"
             ]
         ]
@@ -1028,50 +747,33 @@
         "id": "206d0696680d871d",
         "type": "function",
         "z": "1e59d6a3e5a88154",
-        "name": "function 1",
-        "func": "// Predpokladáme, že vstupom je pole objektov v msg.payload\nconst data = msg.payload;\n\n// Názov série, ktorý sa zobrazí v legende grafu\nconst seriesName = \"teplota\"; \n\n// Premena dát na požadovaný formát\nconst chartData = data\n    // 1. FILTRÁCIA (voliteľné, ale odporúčané): Odstráni celé dátové body s null hodnotami,\n    // aby sa neobjavovali medzery v grafe, ak ich nechceme.\n    .filter(item => item.mean !== null && item.mean !== undefined)\n    \n    // 2. MAPOVANIE: Prevod zostávajúcich platných dát\n    .map(item => {\n        // Časová značka musí byť v milisekundách\n        const timestamp_ms = new Date(item.time).getTime();\n        \n        // Hodnota 'item.mean' je už v tomto bode zaručene číslo (nie null)\n        \n        // Zaokrúhlenie hodnoty 'mean' na 3 desatinné miesta\n        const roundedMean = parseFloat(item.mean.toFixed(3)); \n\n        // Vytvorenie objektu pre graf\n        return {\n            \"series\" : seriesName,\n            \"x\": timestamp_ms,\n            \"y\": roundedMean \n        };\n    });\n\n// Vytvorenie finálneho objektu pre Chart node\nmsg.payload = chartData\n\nreturn msg;",
+        "name": "Tmpr IDB to Chart",
+        "func": "/*\n * Input Influx DB message format:\n * Based on: SELECT mean(\"temperature\") FROM \"environment\" WHERE time > now() - 7d GROUP BY time(30m) fill(null) tz('Europe/Bratislava')\n * --------------------------------------------------------------\n * [ ...\n * {\"time\":\"2025-11-09T18:00:00.000Z\",\"mean\":null},\n * {\"time\":\"2025-11-09T18:30:00.000Z\",\"mean\":null},\n * {\"time\":\"2025-11-09T19:00:00.000Z\",\"mean\":21.964823529411788},\n * {\"time\":\"2025-11-09T19:30:00.000Z\",\"mean\":21.859259259259243},\n * {\"time\":\"2025-11-09T20:00:00.000Z\",\"mean\":21.799594594594634},\n *   ... ]\n * \n * Output data format for Chart Node:\n * --------------------------------------------------------------\n * msg.topic = \"Temperature\"\n * msg.payload = \n * [\n *      {\"x\":1762714800000,\"y\":21.965},\n *      {\"x\":1762716600000,\"y\":21.859},\n *      {\"x\":1762718400000,\"y\":21.8},\n *      ...\n * ]\n * */\n\n// Array of objects in msg.payload\nconst data = msg.payload;\n\n// Name of series for chart (for legend)\nconst seriesName = \"Temperature\"; // 'Show Legend' must be enabled on Chart Node\n\n// Data conversion to output format:\nconst chartData = data\n    // 1. Filtration - remove data points with 'null' value\n    // (to avoid empty space in graph-line of the Chart node)\n    .filter(item => item.mean !== null && item.mean !== undefined)\n    \n    // 2. Mapping\n    .map(item => {\n        // Timestamp in mili-sec\n        const timestamp_ms = new Date(item.time).getTime();\n        \n        // Rounding the value of 'mean' to 3 decimal places\n        const roundedMean = parseFloat(item.mean.toFixed(3)); \n\n        // Creating an object for a chart\n        return {\n            //\"series\" : seriesName, - instead the 'msg.topic' is used\n            \"x\": timestamp_ms,\n            \"y\": roundedMean \n        };\n    });\n\n// Final object for Chart node\nmsg.payload = chartData\nmsg.topic = seriesName\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1060,
-        "y": 120,
+        "x": 890,
+        "y": 900,
         "wires": [
             [
-                "67f5af1db598dbe4",
                 "fa6bc264411495fa"
             ]
         ]
-    },
-    {
-        "id": "67f5af1db598dbe4",
-        "type": "debug",
-        "z": "1e59d6a3e5a88154",
-        "name": "debug 2",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1300,
-        "y": 180,
-        "wires": []
     },
     {
         "id": "fa6bc264411495fa",
         "type": "ui-chart",
         "z": "1e59d6a3e5a88154",
         "group": "9a3a1f181c9b4cfe",
-        "name": "Teplota 7dni (DB)",
-        "label": "Teplota z (DB)",
-        "order": 9,
+        "name": "Tmpr 7 days (DB)",
+        "label": "Temperature [C] per 7 days (from DB)",
+        "order": 7,
         "chartType": "line",
-        "category": "teplota",
-        "categoryType": "str",
+        "category": "topic",
+        "categoryType": "msg",
         "xAxisLabel": "",
         "xAxisProperty": "x",
         "xAxisPropertyType": "property",
@@ -1117,8 +819,8 @@
         "height": 8,
         "className": "",
         "interpolation": "linear",
-        "x": 1310,
-        "y": 120,
+        "x": 1150,
+        "y": 900,
         "wires": [
             []
         ]
@@ -1145,7 +847,7 @@
         "reduceInitType": "",
         "reduceFixup": "",
         "x": 380,
-        "y": 940,
+        "y": 760,
         "wires": [
             [
                 "e51320babcb90c4d"
@@ -1153,35 +855,19 @@
         ]
     },
     {
-        "id": "ff7c4660f02ceb61",
-        "type": "debug",
-        "z": "1e59d6a3e5a88154",
-        "name": "debug 3",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1260,
-        "y": 940,
-        "wires": []
-    },
-    {
         "id": "e51320babcb90c4d",
         "type": "function",
         "z": "1e59d6a3e5a88154",
-        "name": "function 2",
-        "func": "// Input structure now contains nested objects: \n// { \"home/thermometer/temperature\": { \"value\": 22.52, \"unit\": \"C\" }, ... }\n\nconst payloadIn = msg.payload;\n\n// Define field and tag names\nconst tempTopic = \"home/thermometer/temperature\";\nconst humTopic = \"home/thermometer/humidity\";\nconst measurementName = \"environment\";\nconst deviceTag = \"home/thermometer/hall\";\n\n// Helper function to safely extract the 'value' field and convert it to a float.\nfunction extractAndParse(topic) {\n    const data = payloadIn[topic];\n\n    // 1. Check if the object for the topic exists\n    if (!data || data.value === null || data.value === undefined) {\n        // If data is missing or value is null/undefined, return null\n        return null;\n    }\n\n    // 2. Access the nested 'value' key and attempt conversion\n    const value = data.value;\n    \n    // parseFloat is usually safe, but check for non-numeric input for robustness\n    if (typeof value === 'number') {\n        return value;\n    }\n    \n    const result = parseFloat(value);\n    \n    // Check if the result is NaN (Not a Number)\n    if (isNaN(result)) {\n        node.warn(`Warning: Could not parse numeric value for topic: ${topic}. Value was: ${value}`);\n        return null;\n    }\n    \n    return result;\n}\n\n\n// Recommended structure for writing to InfluxDB\n\nmsg.measurement = measurementName;\nmsg.payload = [\n    {\n        // Correct access path: payloadIn[topic].value\n        temperature: extractAndParse(tempTopic),\n        humidity: extractAndParse(humTopic)\n    },\n    {\n        device: deviceTag\n    }\n];\n\n// Log the final payload for debugging. Check the Node-RED debug tab.\n// node.warn(JSON.stringify(msg.payload));\n\nreturn msg;",
+        "name": "MQTT to InfluxDB",
+        "func": "/*\n * Input MQTT message format (msg.payload):\n * -----------------------------------------\n * {\n *   \"home/thermometer/temperature\":\n *      {\n *          \"value\":24.06, \n *          \"unit\":\"C\"\n *      },\n *   \"home/thermometer/humidity\":\n *      {\n *          \"value\":64.98,\n *          \"unit\":\"%\"\n *      }\n * }\n * \n * Output message format (InfluxDB):\n * -----------------------------------------\n * msg.measurement = measurementName;\n * msg.payload = \n * [\n *      { fields },\n *      { tags   }\n * ];\n */\n\nconst payloadIn = msg.payload;\n\n/* Define field and tag names */\nconst measurementName = \"environment\";\nconst tempTopic = \"home/thermometer/temperature\";\nconst humiTopic = \"home/thermometer/humidity\";\nconst deviceTag = \"home/thermometer/hall\";\n\n// Helper function to safely extract the 'value' field and convert it to a float.\nfunction extractAndParse(topic) {\n    const data = payloadIn[topic];\n\n    // 1. Check if the object for the topic exists\n    if (!data || data.value === null || data.value === undefined) {\n        // If data is missing or value is null/undefined, return null\n        return null;\n    }\n\n    // 2. Access the nested 'value' key and attempt conversion\n    const value = data.value;\n    \n    // parseFloat is usually safe, but check for non-numeric input for robustness\n    if (typeof value === 'number') {\n        return value;\n    }\n    \n    const result = parseFloat(value);\n    \n    // Check if the result is NaN (Not a Number)\n    if (isNaN(result)) {\n        node.warn(`Warning: Could not parse numeric value for topic: ${topic}. Value was: ${value}`);\n        return null;\n    }\n    \n    return result;\n}\n\n// Structure for writing to InfluxDB\nmsg.measurement = measurementName;\nmsg.payload = [\n    {\n        // Correct access path: payloadIn[topic].value\n        temperature: extractAndParse(tempTopic),\n        humidity: extractAndParse(humiTopic)\n    },\n    {\n        device: deviceTag\n    }\n];\n\n// Log the final payload for debugging. Check the Node-RED debug tab.\n// node.warn(JSON.stringify(msg.payload));\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 620,
-        "y": 940,
+        "x": 650,
+        "y": 760,
         "wires": [
             [
                 "bd2b0631ae74aa73"
@@ -1196,14 +882,14 @@
         "name": "InfluxDB iot_data 2",
         "measurement": "",
         "precision": "ms",
-        "retentionPolicy": "seven_days",
+        "retentionPolicy": "one_month",
         "database": "database",
         "precisionV18FluxV20": "ms",
         "retentionPolicyV18Flux": "",
         "org": "organisation",
         "bucket": "bucket",
         "x": 890,
-        "y": 940,
+        "y": 760,
         "wires": [],
         "info": "Field 'measurment' is KEY to database. \r\nIn this case, the 'measurement' value is in msg paload:\r\n\r\ne.g.:\r\n[\r\n{\"temperature\":22.1,\"humidity\":70.8},\r\n{\"device\":\"home/thermometer/hall\"}\r\n]\r\n\r\ncode:\r\n\r\nmsg.measurement = measurementName;\r\nmsg.payload = [\r\n    {\r\n        // Correct access path: payloadIn[topic].value\r\n        temperature: extractAndParse(tempTopic),\r\n        humidity: extractAndParse(humTopic)\r\n    },\r\n    {\r\n        device: deviceTag\r\n    }\r\n];\r\n\r\n\r\ninflux\r\nUSE iot_data\r\nSELECT * FROM environment ORDER BY time DESC LIMIT 10\r\n\r\nwhere 'environment' is from msg.measurement"
     },
@@ -1212,14 +898,14 @@
         "type": "influxdb in",
         "z": "1e59d6a3e5a88154",
         "influxdb": "1a463d669d42977d",
-        "name": "DB 7day",
+        "name": "Humi DB 7day",
         "query": "SELECT mean(\"humidity\") FROM \"environment\" WHERE time > now() - 7d GROUP BY time(30m) fill(null) tz('Europe/Bratislava')",
         "rawOutput": false,
         "precision": "",
         "retentionPolicy": "",
         "org": "organisation",
-        "x": 860,
-        "y": 1020,
+        "x": 640,
+        "y": 980,
         "wires": [
             [
                 "ba72ca10259694b3"
@@ -1230,20 +916,19 @@
         "id": "ba72ca10259694b3",
         "type": "function",
         "z": "1e59d6a3e5a88154",
-        "name": "function 3",
-        "func": "// Predpokladáme, že vstupom je pole objektov v msg.payload\nconst data = msg.payload;\n\n// Názov série, ktorý sa zobrazí v legende grafu\nconst seriesName = \"vlhkost\"; \n\n// Premena dát na požadovaný formát\nconst chartData = data\n    // 1. FILTRÁCIA (voliteľné, ale odporúčané): Odstráni celé dátové body s null hodnotami,\n    // aby sa neobjavovali medzery v grafe, ak ich nechceme.\n    .filter(item => item.mean !== null && item.mean !== undefined)\n    \n    // 2. MAPOVANIE: Prevod zostávajúcich platných dát\n    .map(item => {\n        // Časová značka musí byť v milisekundách\n        const timestamp_ms = new Date(item.time).getTime();\n        \n        // Hodnota 'item.mean' je už v tomto bode zaručene číslo (nie null)\n        \n        // Zaokrúhlenie hodnoty 'mean' na 3 desatinné miesta\n        const roundedMean = parseFloat(item.mean.toFixed(3)); \n\n        // Vytvorenie objektu pre graf\n        return {\n            \"series\" : seriesName,\n            \"x\": timestamp_ms,\n            \"y\": roundedMean \n        };\n    });\n\n// Vytvorenie finálneho objektu pre Chart node\nmsg.payload = chartData\n\nreturn msg;",
+        "name": "Humi IDB to Chart",
+        "func": "/*\n * Input Influx DB message format:\n * Based on: SELECT mean(\"humidity\") FROM \"environment\" WHERE time > now() - 7d GROUP BY time(30m) fill(null) tz('Europe/Bratislava')\n * --------------------------------------------------------------\n * [ ...\n *  {\"time\":\"2025-11-09T18:00:00.000Z\",\"mean\":null},\n *  {\"time\":\"2025-11-09T18:30:00.000Z\",\"mean\":null},\n *  {\"time\":\"2025-11-09T19:00:00.000Z\",\"mean\":72.38141176470586},\n *  {\"time\":\"2025-11-09T19:30:00.000Z\",\"mean\":72.39245791245794},\n *  {\"time\":\"2025-11-09T20:00:00.000Z\",\"mean\":72.10246621621624},\n *   ... ]\n * \n * Output data format for Chart Node:\n * --------------------------------------------------------------\n * msg.topic = \"Humidity\"\n * msg.payload = \n * [\n *      {\"x\":1762714800000,\"y\":72.381},\n *      {\"x\":1762716600000,\"y\":72.392},\n *      {\"x\":1762718400000,\"y\":72.102},\n *      ...\n * ]\n * */\n\n// Array of objects in msg.payload                                  \nconst data = msg.payload;\n\n// Name of series for chart (for legend)\nconst seriesName = \"Humidity\"; // 'Show Legend' must be enabled on Chart Node\n\n// Data conversion to output format:\nconst chartData = data\n    // 1. Filtration - remove data points with 'null' value\n    // (to avoid empty space in graph-line of the Chart node)\n    .filter(item => item.mean !== null && item.mean !== undefined)\n    \n    // 2. Mapping\n    .map(item => {\n        // Časová značka musí byť v milisekundách\n        const timestamp_ms = new Date(item.time).getTime();\n        \n        // Rounding the value of 'mean' to 3 decimal places\n        const roundedMean = parseFloat(item.mean.toFixed(3)); \n\n        // Creating an object for a chart\n        return {\n            //\"series\" : seriesName, - instead the 'msg.topic' is used\n            \"x\": timestamp_ms,\n            \"y\": roundedMean \n        };\n    });\n\n// Final object for Chart node\nmsg.payload = chartData\nmsg.topic = seriesName                      \n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1060,
-        "y": 1020,
+        "x": 890,
+        "y": 980,
         "wires": [
             [
-                "2ae42b238470f622",
-                "ff7c4660f02ceb61"
+                "2ae42b238470f622"
             ]
         ]
     },
@@ -1252,12 +937,12 @@
         "type": "ui-chart",
         "z": "1e59d6a3e5a88154",
         "group": "9a3a1f181c9b4cfe",
-        "name": "Vlhkost 7dni (DB)",
-        "label": "Vlhkost z (DB)",
-        "order": 10,
+        "name": "Humi 7 days (DB)",
+        "label": "Humidity [%] per 7 days (from DB)",
+        "order": 8,
         "chartType": "line",
-        "category": "vlhkost",
-        "categoryType": "str",
+        "category": "topic",
+        "categoryType": "msg",
         "xAxisLabel": "",
         "xAxisProperty": "x",
         "xAxisPropertyType": "property",
@@ -1303,31 +988,17 @@
         "height": 8,
         "className": "",
         "interpolation": "linear",
-        "x": 1290,
-        "y": 1020,
+        "x": 1150,
+        "y": 980,
         "wires": [
             []
         ]
     },
     {
-        "id": "0b33ce620fd31093",
-        "type": "link out",
-        "z": "1e59d6a3e5a88154",
-        "name": "Trigger DB",
-        "mode": "link",
-        "links": [
-            "21ae07eaec576b34",
-            "29b46aa893c08346"
-        ],
-        "x": 295,
-        "y": 120,
-        "wires": []
-    },
-    {
         "id": "055803a80ac55882",
         "type": "inject",
         "z": "1e59d6a3e5a88154",
-        "name": "Dopyt do DB",
+        "name": "Request to DB",
         "props": [
             {
                 "p": "payload"
@@ -1340,49 +1011,28 @@
         "topic": "",
         "payload": "ReadDdata",
         "payloadType": "str",
-        "x": 140,
-        "y": 120,
+        "x": 160,
+        "y": 900,
         "wires": [
             [
-                "0b33ce620fd31093"
-            ]
-        ],
-        "info": "Note: msg.payload = (String)\"ReadDdata\" - is not relevant, it is ignored by DB"
-    },
-    {
-        "id": "21ae07eaec576b34",
-        "type": "link in",
-        "z": "1e59d6a3e5a88154",
-        "name": "Triger DB OUT",
-        "links": [
-            "0b33ce620fd31093"
-        ],
-        "x": 735,
-        "y": 120,
-        "wires": [
-            [
-                "8807db686d3c576c"
-            ]
-        ]
-    },
-    {
-        "id": "29b46aa893c08346",
-        "type": "link in",
-        "z": "1e59d6a3e5a88154",
-        "name": "Triger DB OUT",
-        "links": [
-            "0b33ce620fd31093"
-        ],
-        "x": 705,
-        "y": 1020,
-        "wires": [
-            [
+                "8807db686d3c576c",
                 "9f91318068d9d9eb"
             ]
-        ]
+        ],
+        "info": "## Description: \r\nTrigger request to DB with 1min cycle\r\n\r\n## Note: \r\nmsg.payload = (String)\"ReadDdata\" - is not relevant, it is ignored by next node (DB)."
     },
     {
-        "id": "7f2a5d986ceb01e0",
+        "id": "25dbacc4d6702c50",
+        "type": "comment",
+        "z": "1e59d6a3e5a88154",
+        "name": "Points in chart",
+        "info": "# Chart - number of points in chart\n\n## number of measurements on the sensor\ndefine LOOP_TIME 6000\nOne measurement per 6sec => for 60sec is executed 10 measurements. \n60/6 = 10 measurements per minute (10/1min)\n\nPoint Reduction:\n\n Time  |  Agregation   |          Points in chart\n 6 hod | 20:  1m/2min  | (1/2)/1min x 60min x 6hod  = 180\n12 hod | 60:  1m/6min  | (1/6)/1min x 60min x 24hod = 240\n24 hod | 300: 1m/30min |  2/1hod x 168              = 336\n\n180+240+240+336 = 996 points in chart ( RAM must be used ).",
+        "x": 1110,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "e2271755aa7c5b45",
         "type": "global-config",
         "env": [],
         "modules": {
