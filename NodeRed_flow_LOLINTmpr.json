@@ -116,7 +116,7 @@
     {
         "id": "9a3a1f181c9b4cfe",
         "type": "ui-group",
-        "name": "Teplota",
+        "name": "Sensor: Hall",
         "page": "148a611776ecc792",
         "width": 6,
         "height": 1,
@@ -189,8 +189,7 @@
             [
                 "fb820ddf08dc2cae",
                 "4fa6ad5dbe65ef9f",
-                "8170ac4f122f046e",
-                "c2c4ce9e2793123e"
+                "8170ac4f122f046e"
             ]
         ]
     },
@@ -241,7 +240,7 @@
         "width": "1",
         "height": "1",
         "name": "Temperature",
-        "label": "Temperature [C]:",
+        "label": "Tmpr [C]:",
         "format": "{{msg.payload}}",
         "layout": "row-left",
         "style": false,
@@ -448,7 +447,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 140,
-        "y": 600,
+        "y": 580,
         "wires": [
             [
                 "98afe43557ae7cc1",
@@ -476,7 +475,7 @@
         "to": "",
         "reg": false,
         "x": 370,
-        "y": 600,
+        "y": 580,
         "wires": [
             [
                 "49b889d688c93d53",
@@ -493,7 +492,7 @@
         "width": "1",
         "height": "1",
         "name": "Humidity",
-        "label": "Humidity [%]:",
+        "label": "Humi [%]:",
         "format": "{{msg.payload}}",
         "layout": "row-left",
         "style": false,
@@ -505,7 +504,7 @@
         "value": "payload",
         "valueType": "msg",
         "x": 1100,
-        "y": 600,
+        "y": 580,
         "wires": []
     },
     {
@@ -520,7 +519,7 @@
         "mult": "single",
         "reduce": true,
         "x": 610,
-        "y": 680,
+        "y": 660,
         "wires": [
             [
                 "2117bf5fbf678b14"
@@ -584,7 +583,7 @@
         "className": "",
         "interpolation": "linear",
         "x": 1120,
-        "y": 680,
+        "y": 660,
         "wires": [
             []
         ]
@@ -609,119 +608,11 @@
         "to": "",
         "reg": false,
         "x": 850,
-        "y": 680,
+        "y": 660,
         "wires": [
             [
                 "487b2b9faa3e4410"
             ]
-        ]
-    },
-    {
-        "id": "c2c4ce9e2793123e",
-        "type": "smooth",
-        "z": "1e59d6a3e5a88154",
-        "name": "300 to 1",
-        "property": "payload",
-        "action": "mean",
-        "count": "300",
-        "round": "",
-        "mult": "single",
-        "reduce": true,
-        "x": 620,
-        "y": 520,
-        "wires": [
-            [
-                "9a8e6b08924071e6"
-            ]
-        ]
-    },
-    {
-        "id": "9a8e6b08924071e6",
-        "type": "change",
-        "z": "1e59d6a3e5a88154",
-        "name": "RoundTo2Decimal",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "$round(payload, 2)",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 850,
-        "y": 520,
-        "wires": [
-            [
-                "f1f594a990aaf0f7"
-            ]
-        ]
-    },
-    {
-        "id": "f1f594a990aaf0f7",
-        "type": "ui-chart",
-        "z": "1e59d6a3e5a88154",
-        "group": "9a3a1f181c9b4cfe",
-        "name": "Tmpr 7 days",
-        "label": "Temperature [C] per 7 days",
-        "order": 6,
-        "chartType": "line",
-        "category": "topic",
-        "categoryType": "msg",
-        "xAxisLabel": "",
-        "xAxisProperty": "",
-        "xAxisPropertyType": "timestamp",
-        "xAxisType": "time",
-        "xAxisFormat": "",
-        "xAxisFormatType": "auto",
-        "xmin": "",
-        "xmax": "",
-        "yAxisLabel": "",
-        "yAxisProperty": "payload",
-        "yAxisPropertyType": "msg",
-        "ymin": "",
-        "ymax": "",
-        "bins": 10,
-        "action": "append",
-        "stackSeries": false,
-        "pointShape": "circle",
-        "pointRadius": 4,
-        "showLegend": false,
-        "removeOlder": "168",
-        "removeOlderUnit": "3600",
-        "removeOlderPoints": "",
-        "colors": [
-            "#0095ff",
-            "#ff0000",
-            "#ff7f0e",
-            "#2ca02c",
-            "#a347e1",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "textColor": [
-            "#666666"
-        ],
-        "textColorDefault": true,
-        "gridColor": [
-            "#e5e5e5"
-        ],
-        "gridColorDefault": true,
-        "width": "6",
-        "height": "5",
-        "className": "",
-        "interpolation": "linear",
-        "x": 1110,
-        "y": 520,
-        "wires": [
-            []
         ]
     },
     {
@@ -736,7 +627,7 @@
         "retentionPolicy": "",
         "org": "organisation",
         "x": 640,
-        "y": 900,
+        "y": 960,
         "wires": [
             [
                 "206d0696680d871d"
@@ -756,7 +647,7 @@
         "finalize": "",
         "libs": [],
         "x": 890,
-        "y": 900,
+        "y": 960,
         "wires": [
             [
                 "fa6bc264411495fa"
@@ -820,7 +711,7 @@
         "className": "",
         "interpolation": "linear",
         "x": 1150,
-        "y": 900,
+        "y": 960,
         "wires": [
             []
         ]
@@ -905,7 +796,7 @@
         "retentionPolicy": "",
         "org": "organisation",
         "x": 640,
-        "y": 980,
+        "y": 1040,
         "wires": [
             [
                 "ba72ca10259694b3"
@@ -925,7 +816,7 @@
         "finalize": "",
         "libs": [],
         "x": 890,
-        "y": 980,
+        "y": 1040,
         "wires": [
             [
                 "2ae42b238470f622"
@@ -989,7 +880,7 @@
         "className": "",
         "interpolation": "linear",
         "x": 1150,
-        "y": 980,
+        "y": 1040,
         "wires": [
             []
         ]
@@ -1012,11 +903,12 @@
         "payload": "ReadDdata",
         "payloadType": "str",
         "x": 160,
-        "y": 900,
+        "y": 960,
         "wires": [
             [
                 "8807db686d3c576c",
-                "9f91318068d9d9eb"
+                "9f91318068d9d9eb",
+                "8e04d9a9d52cdcc8"
             ]
         ],
         "info": "## Description: \r\nTrigger request to DB with 1min cycle\r\n\r\n## Note: \r\nmsg.payload = (String)\"ReadDdata\" - is not relevant, it is ignored by next node (DB)."
@@ -1026,13 +918,114 @@
         "type": "comment",
         "z": "1e59d6a3e5a88154",
         "name": "Points in chart",
-        "info": "# Chart - number of points in chart\n\n## number of measurements on the sensor\ndefine LOOP_TIME 6000\nOne measurement per 6sec => for 60sec is executed 10 measurements. \n60/6 = 10 measurements per minute (10/1min)\n\nPoint Reduction:\n\n Time  |  Agregation   |          Points in chart\n 6 hod | 20:  1m/2min  | (1/2)/1min x 60min x 6hod  = 180\n12 hod | 60:  1m/6min  | (1/6)/1min x 60min x 24hod = 240\n24 hod | 300: 1m/30min |  2/1hod x 168              = 336\n\n180+240+240+336 = 996 points in chart ( RAM must be used ).",
+        "info": "# Chart - number of points in chart\n\n## number of measurements on the sensor\ndefine LOOP_TIME 6000\nOne measurement per 6sec => for 60sec is executed 10 measurements. \n60/6 = 10 measurements per minute (10/1min)\n\nPoint Reduction:\n\n Time  |  Agregation   |          Points in chart\n 6 hod | 20:  1m/2min  | (1/2)/1min x 60min x 6hod  = 180\n24 hod | 60:  1m/6min  | (1/6)/1min x 60min x 24hod = 240\n 3 dni | 200: 1m/20min |  3/1hod x 72               = 216\n 7 dni | 300: 1m/30min |  2/1hod x 168              = 336\n\n180+240+240 = 660 points in chart ( RAM must be used ).",
         "x": 1110,
         "y": 220,
         "wires": []
     },
     {
-        "id": "e2271755aa7c5b45",
+        "id": "8e04d9a9d52cdcc8",
+        "type": "influxdb in",
+        "z": "1e59d6a3e5a88154",
+        "influxdb": "1a463d669d42977d",
+        "name": "Tmpr DB 3day",
+        "query": "SELECT mean(\"temperature\") FROM \"environment\" WHERE time > now() - 3d GROUP BY time(20m) fill(null) tz('Europe/Bratislava')",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 640,
+        "y": 880,
+        "wires": [
+            [
+                "bdc5b524643b8c1b"
+            ]
+        ]
+    },
+    {
+        "id": "bdc5b524643b8c1b",
+        "type": "function",
+        "z": "1e59d6a3e5a88154",
+        "name": "Tmpr IDB to Chart",
+        "func": "/*\n * Input Influx DB message format:\n * Based on: SELECT mean(\"temperature\") FROM \"environment\" WHERE time > now() - 7d GROUP BY time(30m) fill(null) tz('Europe/Bratislava')\n * --------------------------------------------------------------\n * [ ...\n * {\"time\":\"2025-11-09T18:00:00.000Z\",\"mean\":null},\n * {\"time\":\"2025-11-09T18:30:00.000Z\",\"mean\":null},\n * {\"time\":\"2025-11-09T19:00:00.000Z\",\"mean\":21.964823529411788},\n * {\"time\":\"2025-11-09T19:30:00.000Z\",\"mean\":21.859259259259243},\n * {\"time\":\"2025-11-09T20:00:00.000Z\",\"mean\":21.799594594594634},\n *   ... ]\n * \n * Output data format for Chart Node:\n * --------------------------------------------------------------\n * msg.topic = \"Temperature\"\n * msg.payload = \n * [\n *      {\"x\":1762714800000,\"y\":21.965},\n *      {\"x\":1762716600000,\"y\":21.859},\n *      {\"x\":1762718400000,\"y\":21.8},\n *      ...\n * ]\n * */\n\n// Array of objects in msg.payload\nconst data = msg.payload;\n\n// Name of series for chart (for legend)\nconst seriesName = \"Temperature\"; // 'Show Legend' must be enabled on Chart Node\n\n// Data conversion to output format:\nconst chartData = data\n    // 1. Filtration - remove data points with 'null' value\n    // (to avoid empty space in graph-line of the Chart node)\n    .filter(item => item.mean !== null && item.mean !== undefined)\n    \n    // 2. Mapping\n    .map(item => {\n        // Timestamp in mili-sec\n        const timestamp_ms = new Date(item.time).getTime();\n        \n        // Rounding the value of 'mean' to 3 decimal places\n        const roundedMean = parseFloat(item.mean.toFixed(3)); \n\n        // Creating an object for a chart\n        return {\n            //\"series\" : seriesName, - instead the 'msg.topic' is used\n            \"x\": timestamp_ms,\n            \"y\": roundedMean \n        };\n    });\n\n// Final object for Chart node\nmsg.payload = chartData\nmsg.topic = seriesName\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 880,
+        "wires": [
+            [
+                "c381fe1c93ca33df"
+            ]
+        ]
+    },
+    {
+        "id": "c381fe1c93ca33df",
+        "type": "ui-chart",
+        "z": "1e59d6a3e5a88154",
+        "group": "9a3a1f181c9b4cfe",
+        "name": "Tmpr 3 days (DB)",
+        "label": "Temperature [C] per 3 days (from DB)",
+        "order": 6,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "x",
+        "xAxisPropertyType": "property",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "y",
+        "yAxisPropertyType": "property",
+        "ymin": "",
+        "ymax": "",
+        "bins": 10,
+        "action": "replace",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": false,
+        "removeOlder": "3",
+        "removeOlderUnit": "86400",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": 8,
+        "className": "",
+        "interpolation": "linear",
+        "x": 1150,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b1cf52f1fb61d22d",
         "type": "global-config",
         "env": [],
         "modules": {
