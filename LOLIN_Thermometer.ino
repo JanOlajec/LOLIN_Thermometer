@@ -77,6 +77,7 @@ MQTT:
 /* Main loop configuration */
 #define LOOP_TIME 6000 /* Loop time in milliseconds */
 #define BLINK_TIME 100 /* Blink duration for the on-board LED [ms] */ 
+#define BLINK_ACTIVE 0 /* 1-Enable / 0-Disable blink activity */ 
 
 /* MQTT broker (Mosquitto) on Raspberry Pi */
 #define MQTT_SERVER "192.168.241.111" /* IP address Raspberry Pi (Mosquitto Broker) */
@@ -223,9 +224,15 @@ void loop() {
   client.loop();
 #endif /* WIFI_ACTIVE */
   
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(BLINK_TIME);
-  digitalWrite(LED_BUILTIN, HIGH);
+  if (BLINK_ACTIVE) {
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(BLINK_TIME);
+    digitalWrite(LED_BUILTIN, HIGH);
+  } 
+  else {
+    /* blink time must be stil used due to main loop duration */
+    delay(BLINK_TIME);
+  }
     
   float t = sht30.readTemperature();
   float h = sht30.readHumidity();
